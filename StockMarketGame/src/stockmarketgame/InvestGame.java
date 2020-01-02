@@ -36,23 +36,22 @@ public class InvestGame {
     }
 
     // method to check if accound details are correct
-    public boolean checkUser(String username, String password) {
-        
+    public boolean checkUser(String username, String password) {        
+        // keep track of whether user is valid or not 
         int validUser = 0;
         
-        // iterate through the arraylist of users
-        for (int i = 0; i < this.users.size(); i++) {
-            if (this.users.get(i).getUsername().equals(username) && this.users.get(i).getPassword().equals(password) == true) {
+        // iterate through users arraylist 
+        for (int i = 0; i < this.users.size(); i ++) {
+            // check if the user username and password entered are correct
+            if (this.users.get(i).getUsername().equals(username) && this.users.get(i).getPassword().equals(password)) {
+                // if so, change tracker to one indicating a valid user and break out of loop
                 validUser = 1;
                 break;
             }
         }
         
-        if (validUser == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        // return true is validUser is 1, otherwise return false
+        return validUser == 1;
         
     }
     
@@ -61,13 +60,6 @@ public class InvestGame {
 //        InvestGame investGame = new InvestGame();
 //        
 //        System.out.println(users.size());
-//        
-//        for (int i = 0; i < users.size(); i++) {
-//            System.out.println(users.get(i).getUsername());
-//            System.out.println(users.get(i).getPassword());
-//            System.out.println(users.get(i).getBalance());
-//            System.out.println("\n");
-//        }
 //    }
 
 }

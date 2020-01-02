@@ -52,7 +52,6 @@ public class UserInfo {
                 // if the buffered reader reads in no more users,
                 if (this.br.readLine() == null) {
                     // break out of the loop
-                    this.br.close();
                     break;
                 }
             }
@@ -68,11 +67,18 @@ public class UserInfo {
         this.balance = balance;
 
         // write user data to file
-        this.writer.write("\n" + "\n" + username);
-        this.writer.write("\n" + password);
-        this.writer.write("\n" + balance);
-        this.writer.flush();
-        this.writer.close();
+        if (this.file.length() == 0) {
+            this.writer.write(username);
+            this.writer.write("\n" + password);
+            this.writer.write("\n" + balance);
+            this.writer.flush();
+        } else {
+            this.writer.write("\n" + "\n" + username);
+            this.writer.write("\n" + password);
+            this.writer.write("\n" + balance);
+            this.writer.flush();
+        }
+
     }
 
 }
