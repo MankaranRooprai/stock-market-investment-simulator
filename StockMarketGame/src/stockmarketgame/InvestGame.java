@@ -32,7 +32,7 @@ public class InvestGame {
         // add new user to arraylist
         this.users.add(user);
         // write the new user to the text file
-        this.userInfo.writeToFile(this.users.get(this.users.size() - 1).getUsername(), this.users.get(this.users.size() - 1).getPassword(), this.users.get(this.users.size() - 1).getBalance());
+        this.userInfo.writeToFile(this.users.get(this.users.size() - 1).getUsername(), this.users.get(this.users.size() - 1).getPassword(password), this.users.get(this.users.size() - 1).getBalance());
     }
 
     // method to check if accound details are correct
@@ -43,7 +43,7 @@ public class InvestGame {
         // iterate through users arraylist 
         for (int i = 0; i < this.users.size(); i ++) {
             // check if the user username and password entered are correct
-            if (this.users.get(i).getUsername().equals(username) && this.users.get(i).getPassword().equals(password)) {
+            if (this.users.get(i).getUsername().equals(username) && this.users.get(i).getPassword(password).equals(password)) {
                 // if so, change tracker to one indicating a valid user and break out of loop
                 validUser = 1;
                 break;

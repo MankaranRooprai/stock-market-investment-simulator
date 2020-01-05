@@ -5,8 +5,6 @@
  */
 package stockmarketgame;
 
-import javax.swing.JTextField;
-
 /**
  *
  * @author Mankaran
@@ -35,11 +33,16 @@ public class User {
     }
     
     /**
-     * get password of user
+     * check if password entered is correct, and only then return it
+     * @param password 
      * @return password
      */
-    public String getPassword() {
-        return this.password;
+    public String getPassword(String password) {
+        if (this.password.equals(password)) {
+            return this.password;
+        } else {
+            return "";
+        }
     }
     
     /**

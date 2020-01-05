@@ -5,3 +5,7 @@ pass
 Tommy
 dude
 100000.0
+
+Mankaran
+dude6
+50000.0
