@@ -27,6 +27,7 @@ public class UserInfo {
     private String username;
     private String password;
     private String balance;
+    private int userNumber;
 
     // constructor
     public UserInfo(ArrayList<User> users) throws IOException {
@@ -37,8 +38,10 @@ public class UserInfo {
 
         // if the file exists and has values in it, go ahead and read it
         if (this.file.exists() && this.file.length() != 0) {
-            // while the buffered reader is still reading in values,
-            while (this.br != null) {
+            // while the buffered reader is still reading in values,   
+            String line1;
+            
+            while ((line1 = this.br.readLine()) != null) {
                 // read in the username, password, and balance of each user
                 this.username = this.br.readLine();
                 this.password = this.br.readLine();
@@ -68,12 +71,16 @@ public class UserInfo {
 
         // write user data to file
         if (this.file.length() == 0) {
-            this.writer.write(username);
+            this.userNumber = 0;
+            this.writer.write(Integer.toString(userNumber));
+            this.writer.write("\n" + username);
             this.writer.write("\n" + password);
             this.writer.write("\n" + balance);
             this.writer.flush();
         } else {
-            this.writer.write("\n" + "\n" + username);
+            this.userNumber++;
+            this.writer.write("\n" + "\n" + Integer.toString(userNumber));
+            this.writer.write("\n" + username);
             this.writer.write("\n" + password);
             this.writer.write("\n" + balance);
             this.writer.flush();

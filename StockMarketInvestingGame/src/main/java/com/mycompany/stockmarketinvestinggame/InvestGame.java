@@ -18,11 +18,16 @@ public class InvestGame {
     ArrayList<User> users = new ArrayList<>();
     // create instance of user info
     UserInfo userInfo;
-
+    // create instance of stock data
+    StockData stockData;
+    
+    private int accountNumber;
+    
     // constructor 
     public InvestGame() throws IOException {
         // create new UserInfo
         this.userInfo = new UserInfo(users);
+        this.stockData = new StockData(users, accountNumber);
     }
 
     // method that adds user provided their username, password, and balance
@@ -41,25 +46,34 @@ public class InvestGame {
         int validUser = 0;
         
         // iterate through users arraylist 
-        for (int i = 0; i < this.users.size(); i ++) {
+        for (int i = 0; i < this.users.size(); i++) {
             // check if the user username and password entered are correct
             if (this.users.get(i).getUsername().equals(username) && this.users.get(i).getPassword(password).equals(password)) {
                 // if so, change tracker to one indicating a valid user and break out of loop
-                validUser = 1;
+                this.accountNumber = i;
+                validUser = 1;     
                 break;
             }
         }
         
-        // return true is validUser is 1, otherwise return false
+        // return true if validUser is 1, otherwise return false
         return validUser == 1;
         
     }
     
-//    public static void main(String[] args) throws IOException {
-//        
-//        InvestGame investGame = new InvestGame();
-//        
-//        System.out.println(users.size());
-//    }
+    public boolean userExists(String username) {
+        // keep track of whether user already exists or not 
+        int userExists = 0;
+        
+        for (int i = 0; i < this.users.size(); i++) {
+            if (this.users.get(i).getUsername().equals(username)) {
+                userExists = 1;
+                break;
+            }
+        }
+        
+        return userExists == 1;
+        
+    }
 
 }

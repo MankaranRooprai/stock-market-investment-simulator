@@ -5,19 +5,50 @@
  */
 package com.mycompany.stockmarketinvestinggame;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
+
 /**
  *
  * @author Mankaran
  */
 public class StockData {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+    
+    Stock stock;
+    ArrayList<User> users;
+    int accountNumber;
+    
+    public StockData(ArrayList<User> users, int accountNumber) {
+        this.users = users;
+        this.accountNumber = accountNumber;
+    }
+    
+    // method to get asking price for stock
+    public String getStockAsk(String ticker) throws IOException {
+        this.stock = YahooFinance.get(ticker);
         
+        BigDecimal askPrice = this.stock.getQuote().getAsk();
         
+        return askPrice.toString();
+    }
+    
+    public String getStockBid(String ticker) throws IOException {
+        this.stock = YahooFinance.get(ticker);
         
+        BigDecimal bidPrice = this.stock.getQuote().getBid();
+        
+        return bidPrice.toString();
+    }
+    
+    public void buyStock(String ticker) throws IOException {
+        this.stock = YahooFinance.get(ticker);
+        
+        BigDecimal askPrice = this.stock.getQuote().getAsk();
+        
+        this.users.get(this.accountNumber).setBalance(askPrice.toString());
     }
     
 }

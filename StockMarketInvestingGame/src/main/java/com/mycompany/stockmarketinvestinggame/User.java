@@ -5,6 +5,8 @@
  */
 package com.mycompany.stockmarketinvestinggame;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Mankaran
@@ -14,7 +16,8 @@ public class User {
     // instance variables
     private String username;
     private String password;
-    private String balance; 
+    private String balance;
+    ArrayList<String> stocks = new ArrayList<String>();
     
     // constructor 
     public User(String username, String password, String balance) {
