@@ -17,10 +17,14 @@ import yahoofinance.YahooFinance;
  */
 public class StockData {
     
+    // instance of stock class and users arraylist
     Stock stock;
     ArrayList<User> users;
+    
+    // instance variables
     int accountNumber;
     
+    // contructor that takes in the account number and the users arraylist
     public StockData(ArrayList<User> users, int accountNumber) {
         this.users = users;
         this.accountNumber = accountNumber;
@@ -28,27 +32,43 @@ public class StockData {
     
     // method to get asking price for stock
     public String getStockAsk(String ticker) throws IOException {
-        this.stock = YahooFinance.get(ticker);
         
-        BigDecimal askPrice = this.stock.getQuote().getAsk();
+        BigDecimal askPrice;
         
-        return askPrice.toString();
+        // check if the stock exists 
+        if ((this.stock = YahooFinance.get(ticker)) != null) {
+            // if the stock exists, get the price
+            askPrice = this.stock.getQuote().getAsk();
+            return askPrice.toString();
+        }  else {
+            // otherwise return nothing 
+            return null;
+        }
     }
     
     public String getStockBid(String ticker) throws IOException {
-        this.stock = YahooFinance.get(ticker);
         
-        BigDecimal bidPrice = this.stock.getQuote().getBid();
+        BigDecimal bidPrice;
         
-        return bidPrice.toString();
+        if ((this.stock = YahooFinance.get(ticker)) != null) {
+            bidPrice = this.stock.getQuote().getAsk();
+            return bidPrice.toString();
+        }  else {
+            return null;
+        }
     }
     
     public void buyStock(String ticker) throws IOException {
         this.stock = YahooFinance.get(ticker);
         
-        BigDecimal askPrice = this.stock.getQuote().getAsk();
+        BigDecimal askPrice;
         
-        this.users.get(this.accountNumber).setBalance(askPrice.toString());
+        if ((this.stock = YahooFinance.get(ticker)) != null) {
+            askPrice = this.stock.getQuote().getAsk();
+            askPrice.toString();
+            this.users.get(this.accountNumber).setBalance(askPrice.toString());
+        }
+        
     }
     
 }

@@ -75,5 +75,13 @@ public class InvestGame {
         return userExists == 1;
         
     }
+    
+    public int getAccountNumber(boolean loggedIn) {
+        if (loggedIn) {
+            return this.accountNumber;
+        } else {
+            return -5;
+        }
+    }
 
 }

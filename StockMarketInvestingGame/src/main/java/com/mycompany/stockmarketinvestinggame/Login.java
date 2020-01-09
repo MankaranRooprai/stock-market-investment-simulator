@@ -22,6 +22,7 @@ public class Login extends javax.swing.JFrame {
     private String userName;
     private String pass;
     private String balance;
+    private boolean loggedIn = false;
 
     /**
      * Creates new form Game
@@ -215,6 +216,9 @@ public class Login extends javax.swing.JFrame {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         try {
             if (this.investGame.checkUser(this.username.getText(), this.password.getText())) {
+                this.loggedIn = true;
+                int accountNumber = this.investGame.getAccountNumber(loggedIn);
+                this.investGame.users.get(accountNumber);
                 this.username.setVisible(false);
                 this.password.setVisible(false);
                 this.login.setVisible(false);

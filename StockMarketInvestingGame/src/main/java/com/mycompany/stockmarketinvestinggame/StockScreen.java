@@ -8,6 +8,7 @@ package com.mycompany.stockmarketinvestinggame;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,9 +17,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class StockScreen extends javax.swing.JFrame {
 
-    InvestGame investGame;
-    String ticker;
-    
+    private InvestGame investGame;
+    private String[] col = {"Ticker Symbol", "Ask", "Bid"};
+
     public StockScreen() throws IOException {
         initComponents();
         this.investGame = new InvestGame();
@@ -158,11 +159,14 @@ public class StockScreen extends javax.swing.JFrame {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         try {
-            this.ticker = this.searchField.getText();
-            String[] col = {"Ticker Symbol", "Ask", "Bid"};
-            String[][] data = {{this.searchField.getText(), this.investGame.stockData.getStockAsk(this.searchField.getText()), this.investGame.stockData.getStockBid(this.searchField.getText())}};
-            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
-            model.setDataVector(data, col);
+            String ask = this.investGame.stockData.getStockAsk(this.searchField.getText());
+            if (ask == null) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid ticker symbol.");
+            } else {
+                Object[][] data = {{this.searchField.getText(), this.investGame.stockData.getStockAsk(this.searchField.getText()), this.investGame.stockData.getStockBid(this.searchField.getText())}};
+                DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+                model.setDataVector(data, col);
+            }
         } catch (IOException ex) {
             Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -174,7 +178,7 @@ public class StockScreen extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_buyButtonActionPerformed
 
     /**
