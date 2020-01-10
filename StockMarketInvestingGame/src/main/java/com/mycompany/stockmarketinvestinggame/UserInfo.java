@@ -39,10 +39,10 @@ public class UserInfo {
         // if the file exists and has values in it, go ahead and read it
         if (this.file.exists() && this.file.length() != 0) {
             // while the buffered reader is still reading in values,   
-            String line1;
             
-            while ((line1 = this.br.readLine()) != null) {
+            while (this.br != null) {
                 // read in the username, password, and balance of each user
+                this.userNumber = Integer.parseInt(this.br.readLine());
                 this.username = this.br.readLine();
                 this.password = this.br.readLine();
                 this.balance = this.br.readLine();

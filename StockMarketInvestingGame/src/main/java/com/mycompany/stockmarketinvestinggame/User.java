@@ -17,6 +17,7 @@ public class User {
     private String username;
     private String password;
     private String balance;
+    private int accountNumber;
     ArrayList<String> stocks = new ArrayList<String>();
     
     // constructor 
@@ -72,6 +73,22 @@ public class User {
      */
     public String setBalance(String newBalance) {
         return this.balance += newBalance;
+    }
+    
+    /**
+     * sets the account number
+     * @param accountNumber 
+     */
+    public void setAccountNumber(int accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+    
+    /**
+     * returns the account number of the user
+     * @return account number of user
+     */
+    public int getAccountNumber() {
+        return this.accountNumber;
     }
     
 }

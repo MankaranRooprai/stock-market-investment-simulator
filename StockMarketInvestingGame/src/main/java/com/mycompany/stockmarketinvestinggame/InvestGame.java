@@ -20,9 +20,9 @@ public class InvestGame {
     UserInfo userInfo;
     // create instance of stock data
     StockData stockData;
-    
+
     private int accountNumber;
-    
+
     // constructor 
     public InvestGame() throws IOException {
         // create new UserInfo
@@ -40,48 +40,42 @@ public class InvestGame {
         this.userInfo.writeToFile(this.users.get(this.users.size() - 1).getUsername(), this.users.get(this.users.size() - 1).getPassword(password), this.users.get(this.users.size() - 1).getBalance());
     }
 
-    // method to check if accound details are correct
-    public boolean checkUser(String username, String password) {        
-        // keep track of whether user is valid or not 
-        int validUser = 0;
-        
-        // iterate through users arraylist 
-        for (int i = 0; i < this.users.size(); i++) {
-            // check if the user username and password entered are correct
-            if (this.users.get(i).getUsername().equals(username) && this.users.get(i).getPassword(password).equals(password)) {
-                // if so, change tracker to one indicating a valid user and break out of loop
-                this.accountNumber = i;
-                validUser = 1;     
-                break;
-            }
-        }
-        
-        // return true if validUser is 1, otherwise return false
-        return validUser == 1;
-        
-    }
-    
-    public boolean userExists(String username) {
-        // keep track of whether user already exists or not 
-        int userExists = 0;
-        
+    public int checkUsername(String username) {
+        boolean validUsername = false;
+
         for (int i = 0; i < this.users.size(); i++) {
             if (this.users.get(i).getUsername().equals(username)) {
-                userExists = 1;
+                validUsername = true;
+                this.accountNumber = i;
                 break;
             }
         }
-        
-        return userExists == 1;
-        
-    }
-    
-    public int getAccountNumber(boolean loggedIn) {
-        if (loggedIn) {
+
+        if (validUsername) {
             return this.accountNumber;
         } else {
-            return -5;
+            return -3;
         }
+
     }
 
+    // method to check if accound details are correct
+    public boolean checkUser(String username, String password) {
+        // keep track of whether user is valid or not 
+        boolean validUser = false;
+
+        // iterate through users arraylist 
+        for (int i = 0; i < this.users.size(); i++) {
+            if (checkUsername(username) == this.accountNumber) {
+                if (this.users.get(i).getPassword(password).equals(password)) {
+                    validUser = true;
+                    break;
+                }
+            }
+
+        }
+
+        return validUser;
+
+    }
 }

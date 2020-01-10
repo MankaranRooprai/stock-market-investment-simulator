@@ -1,19 +1,14 @@
 0
 Mankaran
 pass
-100000.0
-
-1
-Dude
-perfect
 50000.0
 
 1
-Austin
-Evans
+Tommy
+dude
+50000.0
+
+2
+Hello
+yes
 20000.0
-
-1
-Hey
-Guys
-50000.0
