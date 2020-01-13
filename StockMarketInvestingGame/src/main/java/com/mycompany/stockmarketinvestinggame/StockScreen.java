@@ -185,7 +185,8 @@ public class StockScreen extends javax.swing.JFrame {
     private void buyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyButtonActionPerformed
         
         try {
-            this.investGame.stockData.buyStock(this.tickerSymbol);
+            String password = JOptionPane.showInputDialog(null, "Please enter your password");
+            this.investGame.buyStock(tickerSymbol, password);
         } catch (IOException ex) {
             Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);
         }

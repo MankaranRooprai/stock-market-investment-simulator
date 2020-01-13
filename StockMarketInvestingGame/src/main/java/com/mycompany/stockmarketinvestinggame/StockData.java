@@ -59,7 +59,7 @@ public class StockData {
         }
     }
     
-    public void buyStock(String ticker) throws IOException {
+    public void buyStock(String ticker, String password) throws IOException {
         this.stock = YahooFinance.get(ticker);
         this.decreaseBalance = false;
         

@@ -5,7 +5,6 @@
  */
 package com.mycompany.stockmarketinvestinggame;
 
-import java.awt.HeadlessException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +26,7 @@ public class Login extends javax.swing.JFrame {
 
     /**
      * Creates new form Game
+     * @throws java.io.IOException
      */
     public Login() throws IOException {
         initComponents();

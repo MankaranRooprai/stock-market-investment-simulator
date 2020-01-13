@@ -83,4 +83,10 @@ public class InvestGame {
         }
 
     }
+    
+    public void buyStock(String ticker, String password) throws IOException {
+        this.stockData.buyStock(ticker, password);
+        this.userInfo.updateFile(password);
+    }
+    
 }

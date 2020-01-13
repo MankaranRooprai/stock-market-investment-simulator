@@ -22,6 +22,8 @@ public class UserInfo {
     private FileWriter writer;
     private BufferedReader br = null;
     private File file;
+    private ArrayList<User> users;
+    private ArrayList<String> newFile;
 
     // instance variables
     private String username;
@@ -35,6 +37,7 @@ public class UserInfo {
         this.file = new File("User_Info.txt");
         this.writer = new FileWriter(this.file, true);
         this.br = new BufferedReader(new FileReader(this.file));
+        this.users = users;
 
         // if the file exists and has values in it, go ahead and read it
         if (this.file.exists() && this.file.length() != 0) {
@@ -87,6 +90,20 @@ public class UserInfo {
             this.writer.flush();
         }
 
+    }
+    
+    public void updateFile(String password) throws IOException {
+        
+        for (int i = 0; i < this.users.size(); i++) {
+            this.accountNumber = this.users.get(i).getAccountNumber();
+            this.username = this.users.get(i).getUsername();
+            this.password = this.users.get(i).getPassword(password);
+            this.balance = this.users.get(i).getBalance(); 
+            this.users.clear();
+            User user = new User(this.username, this.password, this.balance);
+            this.users.add(user);
+        }
+    
     }
 
 }
