@@ -27,7 +27,7 @@ public class UserInfo {
     private String username;
     private String password;
     private String balance;
-    private int userNumber;
+    private int accountNumber;
 
     // constructor
     public UserInfo(ArrayList<User> users) throws IOException {
@@ -42,7 +42,7 @@ public class UserInfo {
             
             while (this.br != null) {
                 // read in the username, password, and balance of each user
-                this.userNumber = Integer.parseInt(this.br.readLine());
+                this.accountNumber = Integer.parseInt(this.br.readLine());
                 this.username = this.br.readLine();
                 this.password = this.br.readLine();
                 this.balance = this.br.readLine();
@@ -50,6 +50,7 @@ public class UserInfo {
                 User user = new User(this.username, this.password, this.balance);
                 // add the user to the arraylist
                 users.add(user);
+                users.get(users.size() - 1).setAccountNumber(this.accountNumber);
                 // separate a line for the buffered reader to read in more users
                 String x = System.lineSeparator();
                 // if the buffered reader reads in no more users,
@@ -71,15 +72,15 @@ public class UserInfo {
 
         // write user data to file
         if (this.file.length() == 0) {
-            this.userNumber = 0;
-            this.writer.write(Integer.toString(userNumber));
+            this.accountNumber = 0;
+            this.writer.write(Integer.toString(this.accountNumber));
             this.writer.write("\n" + username);
             this.writer.write("\n" + password);
             this.writer.write("\n" + balance);
             this.writer.flush();
         } else {
-            this.userNumber++;
-            this.writer.write("\n" + "\n" + Integer.toString(userNumber));
+            this.accountNumber++;
+            this.writer.write("\n" + "\n" + Integer.toString(this.accountNumber));
             this.writer.write("\n" + username);
             this.writer.write("\n" + password);
             this.writer.write("\n" + balance);

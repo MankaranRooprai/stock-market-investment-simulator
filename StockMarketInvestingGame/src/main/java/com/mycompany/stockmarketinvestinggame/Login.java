@@ -42,10 +42,45 @@ public class Login extends javax.swing.JFrame {
         this.investGame = new InvestGame();
     }
 
-    public void signUp() {
+    public void balance() {
         this.fiftyThousand.setVisible(true);
         this.twentyThousand.setVisible(true);
         this.hundredThousand.setVisible(true);
+    }
+
+    public void enter() {
+        this.userName = this.newUsername.getText();
+        this.pass = this.newPassword.getText();
+        this.enter.setVisible(false);
+        this.newUsername.setVisible(false);
+        this.newPassword.setVisible(false);
+        this.twentyThousand.setVisible(true);
+        this.fiftyThousand.setVisible(true);
+        this.hundredThousand.setVisible(true);
+    }
+
+    public void login() throws IOException {
+        this.loggedIn = true;
+        this.investGame.users.get(accountNumber);
+        this.username.setVisible(false);
+        this.password.setVisible(false);
+        this.login.setVisible(false);
+        this.signup.setVisible(false);
+        this.or.setVisible(false);
+        this.dispose();
+        StockScreen stockScreen = new StockScreen();
+        stockScreen.setVisible(true);
+    }
+    
+    public void signUp() {
+        this.or.setVisible(false);
+        this.signup.setVisible(false);
+        this.username.setVisible(false);
+        this.password.setVisible(false);
+        this.login.setVisible(false);
+        this.newUsername.setVisible(true);
+        this.newPassword.setVisible(true);
+        this.enter.setVisible(true);
     }
 
     /**
@@ -215,41 +250,24 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        try {
-            
-            this.accountNumber = this.investGame.checkUsername(this.userName);
-            
-            if (this.investGame.checkUser(userName, pass)) {
-                this.loggedIn = true;
-                this.investGame.users.get(accountNumber);
-                this.username.setVisible(false);
-                this.password.setVisible(false);
-                this.login.setVisible(false);
-                this.signup.setVisible(false);
-                this.or.setVisible(false);
-                this.dispose();
-                StockScreen stockScreen = new StockScreen();
-                stockScreen.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid Login");
+        
+        this.accountNumber = this.investGame.checkUser(this.username.getText(), this.password.getText());
+        
+        if (this.accountNumber != -3) {
+            try {
+                login();
+                JOptionPane.showMessageDialog(null, this.accountNumber);
+            } catch (IOException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (HeadlessException e) {
-            System.out.println("Exception");
-        } catch (IOException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid Login");
         }
     }//GEN-LAST:event_loginActionPerformed
 
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
         // set some components to false
-        this.or.setVisible(false);
-        this.signup.setVisible(false);
-        this.username.setVisible(false);
-        this.password.setVisible(false);
-        this.login.setVisible(false);
-        this.newUsername.setVisible(true);
-        this.newPassword.setVisible(true);
-        this.enter.setVisible(true);
+        signUp();
     }//GEN-LAST:event_signupActionPerformed
 
     private void newUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newUsernameActionPerformed
@@ -259,16 +277,9 @@ public class Login extends javax.swing.JFrame {
     private void enterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterActionPerformed
         // get new usernmae and password entered
         this.accountNumber = this.investGame.checkUsername(this.userName);
-        
+
         if (this.accountNumber != -3) {
-            this.userName = this.newUsername.getText();
-            this.pass = this.newPassword.getText();
-            this.enter.setVisible(false);
-            this.newUsername.setVisible(false);
-            this.newPassword.setVisible(false);
-            this.twentyThousand.setVisible(true);
-            this.fiftyThousand.setVisible(true);
-            this.hundredThousand.setVisible(true);
+            enter();
         } else {
             JOptionPane.showMessageDialog(null, "This username already exists please try again.");
         }
@@ -279,7 +290,7 @@ public class Login extends javax.swing.JFrame {
         try {
             this.balance = "20000.0";
             this.investGame.addUser(this.userName, this.pass, this.balance);
-            signUp();
+            balance();
             this.dispose();
             StockScreen stockScreen = new StockScreen();
         } catch (IOException ex) {
@@ -292,7 +303,7 @@ public class Login extends javax.swing.JFrame {
         try {
             this.balance = "50000.0";
             this.investGame.addUser(this.userName, this.pass, this.balance);
-            signUp();
+            balance();
             this.dispose();
             StockScreen stockScreen = new StockScreen();
         } catch (IOException ex) {
@@ -305,7 +316,7 @@ public class Login extends javax.swing.JFrame {
         try {
             this.balance = "100000.0";
             this.investGame.addUser(this.userName, this.pass, this.balance);
-            signUp();
+            balance();
             this.dispose();
             StockScreen stockScreen = new StockScreen();
         } catch (IOException ex) {

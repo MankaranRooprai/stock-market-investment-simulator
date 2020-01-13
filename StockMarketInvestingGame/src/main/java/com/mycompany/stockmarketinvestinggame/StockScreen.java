@@ -18,11 +18,15 @@ import javax.swing.table.DefaultTableModel;
 public class StockScreen extends javax.swing.JFrame {
 
     private InvestGame investGame;
-    private String[] col = {"Ticker Symbol", "Ask", "Bid"};
+    private DefaultTableModel model;
+    private String tickerSymbol;
+    private String ask;
+    private String bid;
 
     public StockScreen() throws IOException {
         initComponents();
         this.investGame = new InvestGame();
+        model = (DefaultTableModel) this.table.getModel();
         this.setResizable(false);
     }
 
@@ -62,15 +66,20 @@ public class StockScreen extends javax.swing.JFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
-
+                "Ticker Symbol", "Bid", "Ask"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         buyButton.setText("Buy");
@@ -115,13 +124,13 @@ public class StockScreen extends javax.swing.JFrame {
                 .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sellButton)
                     .addComponent(buyButton))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Search", jPanel1);
@@ -159,13 +168,14 @@ public class StockScreen extends javax.swing.JFrame {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         try {
-            String ask = this.investGame.stockData.getStockAsk(this.searchField.getText());
+            this.tickerSymbol = this.searchField.getText();
+            this.ask = this.investGame.stockData.getStockAsk(this.searchField.getText());
+            this.bid = this.investGame.stockData.getStockBid(this.searchField.getText());
+
             if (ask == null) {
                 JOptionPane.showMessageDialog(null, "Please enter a valid ticker symbol.");
             } else {
-                Object[][] data = {{this.searchField.getText(), this.investGame.stockData.getStockAsk(this.searchField.getText()), this.investGame.stockData.getStockBid(this.searchField.getText())}};
-                DefaultTableModel model = (DefaultTableModel) this.table.getModel();
-                model.setDataVector(data, col);
+                this.model.addRow(new Object[]{tickerSymbol, ask, bid});
             }
         } catch (IOException ex) {
             Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -173,8 +183,9 @@ public class StockScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void buyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyButtonActionPerformed
+        
         try {
-            this.investGame.stockData.buyStock(this.searchField.getText());
+            this.investGame.stockData.buyStock(this.tickerSymbol);
         } catch (IOException ex) {
             Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);
         }

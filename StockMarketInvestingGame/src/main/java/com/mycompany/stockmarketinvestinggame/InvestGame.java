@@ -26,8 +26,8 @@ public class InvestGame {
     // constructor 
     public InvestGame() throws IOException {
         // create new UserInfo
-        this.userInfo = new UserInfo(users);
-        this.stockData = new StockData(users, accountNumber);
+        this.userInfo = new UserInfo(this.users);
+        this.stockData = new StockData(this.users, this.accountNumber);
     }
 
     // method that adds user provided their username, password, and balance
@@ -46,7 +46,7 @@ public class InvestGame {
         for (int i = 0; i < this.users.size(); i++) {
             if (this.users.get(i).getUsername().equals(username)) {
                 validUsername = true;
-                this.accountNumber = i;
+                this.accountNumber = this.users.get(i).getAccountNumber();
                 break;
             }
         }
@@ -60,7 +60,7 @@ public class InvestGame {
     }
 
     // method to check if accound details are correct
-    public boolean checkUser(String username, String password) {
+    public int checkUser(String username, String password) {
         // keep track of whether user is valid or not 
         boolean validUser = false;
 
@@ -68,6 +68,7 @@ public class InvestGame {
         for (int i = 0; i < this.users.size(); i++) {
             if (checkUsername(username) == this.accountNumber) {
                 if (this.users.get(i).getPassword(password).equals(password)) {
+                    this.accountNumber = this.users.get(i).getAccountNumber();
                     validUser = true;
                     break;
                 }
@@ -75,7 +76,11 @@ public class InvestGame {
 
         }
 
-        return validUser;
+        if (validUser) {
+            return this.accountNumber;
+        } else {
+            return -3;
+        }
 
     }
 }

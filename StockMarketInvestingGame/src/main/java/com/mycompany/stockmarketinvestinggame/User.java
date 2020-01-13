@@ -69,10 +69,15 @@ public class User {
     /**
      * sets new balance for user
      * @param newBalance
-     * @return new balance
+     * @param decreaseBalance
      */
-    public String setBalance(String newBalance) {
-        return this.balance += newBalance;
+    public void setBalance(String newBalance, boolean decreaseBalance) {
+        if (decreaseBalance) {
+            int currentBalance = Integer.parseInt(this.balance) - Integer.parseInt(newBalance);
+            this.balance = String.valueOf(currentBalance);
+        } else {
+            this.balance += newBalance;
+        }
     }
     
     /**

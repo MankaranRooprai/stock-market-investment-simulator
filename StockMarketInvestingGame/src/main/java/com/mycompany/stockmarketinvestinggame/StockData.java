@@ -23,6 +23,7 @@ public class StockData {
     
     // instance variables
     int accountNumber;
+    boolean decreaseBalance = false;
     
     // contructor that takes in the account number and the users arraylist
     public StockData(ArrayList<User> users, int accountNumber) {
@@ -60,13 +61,13 @@ public class StockData {
     
     public void buyStock(String ticker) throws IOException {
         this.stock = YahooFinance.get(ticker);
+        this.decreaseBalance = false;
         
         BigDecimal askPrice;
         
         if ((this.stock = YahooFinance.get(ticker)) != null) {
             askPrice = this.stock.getQuote().getAsk();
-            askPrice.toString();
-            this.users.get(this.accountNumber).setBalance(askPrice.toString());
+            this.users.get(this.accountNumber).setBalance(askPrice.toString(), decreaseBalance);
         }
         
     }
