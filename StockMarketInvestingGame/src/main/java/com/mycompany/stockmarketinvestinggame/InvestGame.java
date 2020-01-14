@@ -40,21 +40,25 @@ public class InvestGame {
         this.userInfo.writeToFile(this.users.get(this.users.size() - 1).getUsername(), this.users.get(this.users.size() - 1).getPassword(password), this.users.get(this.users.size() - 1).getBalance());
     }
 
-    public int checkUsername(String username) {
+    public boolean checkUsername(String username) {
         boolean validUsername = false;
 
-        for (int i = 0; i < this.users.size(); i++) {
-            if (this.users.get(i).getUsername().equals(username)) {
-                validUsername = true;
-                this.accountNumber = this.users.get(i).getAccountNumber();
-                break;
+        if (!this.users.isEmpty()) {
+            for (int i = 0; i < this.users.size(); i++) {
+                if (this.users.get(i).getUsername().equals(username)) {
+                    validUsername = true;
+                    this.accountNumber = this.users.get(i).getAccountNumber();
+                    break;
+                }
             }
+        } else {
+            return false;
         }
 
         if (validUsername) {
-            return this.accountNumber;
+            return true;
         } else {
-            return -3;
+            return false;
         }
 
     }
@@ -66,7 +70,7 @@ public class InvestGame {
 
         // iterate through users arraylist 
         for (int i = 0; i < this.users.size(); i++) {
-            if (checkUsername(username) == this.accountNumber) {
+            if (checkUsername(username)) {
                 if (this.users.get(i).getPassword(password).equals(password)) {
                     this.accountNumber = this.users.get(i).getAccountNumber();
                     validUser = true;
@@ -83,10 +87,10 @@ public class InvestGame {
         }
 
     }
-    
+
     public void buyStock(String ticker, String password) throws IOException {
         this.stockData.buyStock(ticker, password);
         this.userInfo.updateFile(password);
     }
-    
+
 }

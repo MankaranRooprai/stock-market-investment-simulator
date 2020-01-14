@@ -88,6 +88,7 @@ public class UserInfo {
             this.writer.write("\n" + password);
             this.writer.write("\n" + balance);
             this.writer.flush();
+            this.writer.close();
         }
 
     }

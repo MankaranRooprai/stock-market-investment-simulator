@@ -276,9 +276,8 @@ public class Login extends javax.swing.JFrame {
 
     private void enterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterActionPerformed
         // get new usernmae and password entered
-        this.accountNumber = this.investGame.checkUsername(this.userName);
 
-        if (this.accountNumber != -3) {
+        if (this.investGame.checkUsername(this.newUsername.getText()) == false) {
             enter();
         } else {
             JOptionPane.showMessageDialog(null, "This username already exists please try again.");
@@ -293,6 +292,7 @@ public class Login extends javax.swing.JFrame {
             balance();
             this.dispose();
             StockScreen stockScreen = new StockScreen();
+            stockScreen.setVisible(loggedIn);
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -306,6 +306,7 @@ public class Login extends javax.swing.JFrame {
             balance();
             this.dispose();
             StockScreen stockScreen = new StockScreen();
+            stockScreen.setVisible(loggedIn);
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -319,6 +320,7 @@ public class Login extends javax.swing.JFrame {
             balance();
             this.dispose();
             StockScreen stockScreen = new StockScreen();
+            stockScreen.setVisible(loggedIn);
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
