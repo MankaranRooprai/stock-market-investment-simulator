@@ -19,9 +19,12 @@ public class StockScreen extends javax.swing.JFrame {
 
     private InvestGame investGame;
     private DefaultTableModel model;
+    private Login loginScreen = new Login();
+    private User user = this.loginScreen.getUser();
     private String tickerSymbol;
     private String ask;
     private String bid;
+    private int quantity;
 
     public StockScreen() throws IOException {
         initComponents();
@@ -47,6 +50,8 @@ public class StockScreen extends javax.swing.JFrame {
         table = new javax.swing.JTable();
         buyButton = new javax.swing.JButton();
         sellButton = new javax.swing.JButton();
+        numberOfShares = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -91,6 +96,14 @@ public class StockScreen extends javax.swing.JFrame {
 
         sellButton.setText("Sell");
 
+        numberOfShares.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numberOfSharesActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Please enter the amount of shares you'd like to purchase");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -98,24 +111,32 @@ public class StockScreen extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(97, 97, 97)
-                                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(239, 239, 239)
-                                .addComponent(searchButton)))
-                        .addGap(0, 122, Short.MAX_VALUE))
+                        .addGap(97, 97, 97)
+                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1)))
-                .addContainerGap())
+                        .addGap(239, 239, 239)
+                        .addComponent(searchButton))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(247, 247, 247)
+                        .addComponent(numberOfShares, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(sellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(225, 225, 225))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
+                        .addGap(75, 75, 75))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(buyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(sellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(225, 225, 225))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(164, 164, 164))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,11 +147,14 @@ public class StockScreen extends javax.swing.JFrame {
                 .addComponent(searchButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(numberOfShares, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sellButton)
-                    .addComponent(buyButton))
-                .addContainerGap(68, Short.MAX_VALUE))
+                    .addComponent(buyButton)))
         );
 
         jTabbedPane1.addTab("Search", jPanel1);
@@ -143,7 +167,7 @@ public class StockScreen extends javax.swing.JFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 641, Short.MAX_VALUE)
+            .addGap(0, 644, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Current Positions", jPanel5);
@@ -185,13 +209,26 @@ public class StockScreen extends javax.swing.JFrame {
     private void buyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyButtonActionPerformed
         
         try {
+            int row = this.table.getSelectedRow();
+            if (!(row == -1)) {
+                this.tickerSymbol = (String) this.model.getValueAt(row, 0);
+            }
+            this.quantity = Integer.parseInt(this.numberOfShares.getText());
             String password = JOptionPane.showInputDialog(null, "Please enter your password");
-            this.investGame.buyStock(tickerSymbol, password);
+            if (this.user.getPassword(password) == null) {
+                JOptionPane.showMessageDialog(null, "Invalid Password");
+            } else {
+                this.investGame.buyStock(this.tickerSymbol, this.quantity, password);
+            }
         } catch (IOException ex) {
             Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_buyButtonActionPerformed
+
+    private void numberOfSharesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numberOfSharesActionPerformed
+
+    }//GEN-LAST:event_numberOfSharesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -234,10 +271,12 @@ public class StockScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buyButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField numberOfShares;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
     private javax.swing.JButton sellButton;

@@ -64,14 +64,16 @@ public class InvestGame {
     }
 
     // method to check if accound details are correct
-    public int checkUser(String username, String password) {
+    public User checkUser(String username, String password) {
         // keep track of whether user is valid or not 
+        User user = null;
         boolean validUser = false;
 
         // iterate through users arraylist 
         for (int i = 0; i < this.users.size(); i++) {
             if (checkUsername(username)) {
                 if (this.users.get(i).getPassword(password).equals(password)) {
+                    user = this.users.get(i);
                     this.accountNumber = this.users.get(i).getAccountNumber();
                     validUser = true;
                     break;
@@ -81,15 +83,15 @@ public class InvestGame {
         }
 
         if (validUser) {
-            return this.accountNumber;
+            return user;
         } else {
-            return -3;
+            return null;
         }
 
     }
 
-    public void buyStock(String ticker, String password) throws IOException {
-        this.stockData.buyStock(ticker, password);
+    public void buyStock(String ticker, int quantity, String password) throws IOException {
+        this.stockData.buyStock(ticker, quantity, password);
         this.userInfo.updateFile(password);
     }
 

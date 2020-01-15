@@ -18,7 +18,7 @@ public class User {
     private String password;
     private String balance;
     private int accountNumber;
-    ArrayList<String> stocks = new ArrayList<String>();
+    ArrayList<String> stocks = new ArrayList<>();
     
     // constructor 
     public User(String username, String password, String balance) {
@@ -45,7 +45,7 @@ public class User {
         if (this.password.equals(password)) {
             return this.password;
         } else {
-            return "";
+            return null;
         }
     }
     

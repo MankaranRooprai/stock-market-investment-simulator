@@ -18,6 +18,7 @@ public class Login extends javax.swing.JFrame {
 
     // instance variables
     private InvestGame investGame;
+    private User user;
     private String userName;
     private String pass;
     private String balance;
@@ -83,6 +84,10 @@ public class Login extends javax.swing.JFrame {
         this.enter.setVisible(true);
     }
 
+    public User getUser() {
+        return this.user;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -250,13 +255,12 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        
-        this.accountNumber = this.investGame.checkUser(this.username.getText(), this.password.getText());
-        
-        if (this.accountNumber != -3) {
+        this.userName = this.username.getText();
+        this.pass = this.password.getText();
+        if (this.investGame.checkUser(userName, pass) != null) {
             try {
+                this.user = this.investGame.checkUser(userName, pass);
                 login();
-                JOptionPane.showMessageDialog(null, this.accountNumber);
             } catch (IOException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }

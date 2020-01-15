@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -94,6 +95,10 @@ public class UserInfo {
     }
     
     public void updateFile(String password) throws IOException {
+        
+        PrintWriter pw = new PrintWriter("User_Info.txt");
+        pw.print("");
+        pw.close();
         
         for (int i = 0; i < this.users.size(); i++) {
             this.accountNumber = this.users.get(i).getAccountNumber();
