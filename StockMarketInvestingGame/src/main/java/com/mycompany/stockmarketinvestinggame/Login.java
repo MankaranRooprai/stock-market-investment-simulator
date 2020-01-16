@@ -68,7 +68,7 @@ public class Login extends javax.swing.JFrame {
         this.login.setVisible(false);
         this.signup.setVisible(false);
         this.or.setVisible(false);
-        this.dispose();
+        this.setVisible(false);
         StockScreen stockScreen = new StockScreen();
         stockScreen.setVisible(true);
     }

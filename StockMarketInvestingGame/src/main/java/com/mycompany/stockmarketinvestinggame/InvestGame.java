@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class InvestGame {
 
     // arraylist to store users
-    ArrayList<User> users = new ArrayList<>();
+    ArrayList<User> users;
     // create instance of user info
     UserInfo userInfo;
     // create instance of stock data
@@ -32,6 +32,7 @@ public class InvestGame {
         // create new UserInfo
         this.userInfo = new UserInfo(this.users);
         this.stockData = new StockData(this.users, this.accountNumber);
+        this.users = this.userInfo.userArrayList();
     }
 
     // method that adds user provided their username, password, and balance
@@ -48,7 +49,7 @@ public class InvestGame {
         // add new user to arraylist
         this.users.add(user);
         
-        this.userInfo.writeToFile(users);
+        this.userInfo.writeToFile(this.users);
         // write the new user to the text file
     }
 
@@ -68,11 +69,7 @@ public class InvestGame {
             return false;
         }
 
-        if (validUsername) {
-            return true;
-        } else {
-            return false;
-        }
+        return validUsername;
 
     }
 
