@@ -18,14 +18,15 @@ public class User {
     private String password;
     private String balance;
     private int accountNumber;
-    ArrayList<String> stocks = new ArrayList<>();
+    ArrayList<Stocks> stocks = new ArrayList<>();
     
     // constructor 
-    public User(String username, String password, String balance) {
+    public User(String username, String password, String balance, int accountNumber) {
         // set user values equal to instance variables
         this.username = username;
         this.password = password;
         this.balance = balance;
+        this.accountNumber = accountNumber;
     }
     
     /**
@@ -47,6 +48,10 @@ public class User {
         } else {
             return null;
         }
+    }
+    
+    public String getPass() {
+        return this.password;
     }
     
     /**

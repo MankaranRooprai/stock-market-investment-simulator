@@ -59,16 +59,20 @@ public class StockData {
         }
     }
     
-    public void buyStock(String ticker, int quantity, String password) throws IOException {
+    public Stocks buyStock(String ticker, int quantity, String password) throws IOException {
         this.stock = YahooFinance.get(ticker);
         this.decreaseBalance = false;
         
         double askPrice;
+        Stocks s = null;
         
         if ((this.stock = YahooFinance.get(ticker)) != null) {
             askPrice = this.stock.getQuote().getAsk().doubleValue() * quantity;
             this.users.get(this.accountNumber).setBalance(Double.toString(askPrice), decreaseBalance);
+            s = new Stocks(ticker, askPrice, quantity);
         }
+        
+        return s;
         
     }
     
