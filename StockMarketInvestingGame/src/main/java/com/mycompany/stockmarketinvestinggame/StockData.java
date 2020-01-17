@@ -54,6 +54,7 @@ public class StockData {
     }
     
     public void buyStock(String ticker, User user, double quantity) throws IOException {
+        System.out.println("Buying stock");
         this.stock = YahooFinance.get(ticker);
         
         BigDecimal askPrice;
@@ -62,9 +63,10 @@ public class StockData {
             askPrice = this.stock.getQuote().getAsk();
             // set user's balance and add the stock to their stocks arraylist
             double decreasePrice = askPrice.doubleValue() * quantity;
-            user.decreaseBalance(decreasePrice);
-            user.stocks.add(new Stocks(ticker, askPrice.doubleValue(), quantity));
             System.out.println(user.getBalance());
+            user.decreaseBalance(decreasePrice);
+            System.out.println(user.getBalance());
+            user.stocks.add(new Stocks(ticker, askPrice.doubleValue(), quantity));
         }
     }
     

@@ -44,6 +44,7 @@ public class UserInfo {
         if (this.file.exists() && this.file.length() != 0) {
             // while the buffered reader is still reading in values,   
             while (this.br != null) {
+                
                 // read in the username, password, and balance of each user
                 this.accountNumber = Integer.parseInt(this.br.readLine());
                 this.username = this.br.readLine();
@@ -51,25 +52,33 @@ public class UserInfo {
                 this.balance = this.br.readLine();
                 this.br.readLine();
                 if (this.br.readLine().equals("None")) {
+                    
+                    // skip a line
+                    this.br.readLine();
+                    
                     // create the new user
                     User user = new User(this.username, this.password, Double.parseDouble(this.balance));
+                    
                     // add the user to the arraylist
                     users.add(user);
                     users.get(users.size() - 1).setAccountNumber(this.accountNumber);
-                    // separate a line for the buffered reader to read in more users
+                    
                 } else {
+                    
+                    // skip a line and read in the ticker, buy price, and quantity
                     this.ticker = this.br.readLine();
                     this.buyPrice = Double.parseDouble(this.br.readLine());
                     this.quantity = Double.parseDouble(this.br.readLine());
                     
+                    // skip a line
+                    this.br.readLine();
+                    
                     // create the new user
                     User user = new User(this.username, this.password, Double.parseDouble(this.balance));
                     // add the user to the arraylist
                     users.add(user);
                     users.get(users.size() - 1).setAccountNumber(this.accountNumber);
-                    users.get(users.size() - 1).stocks.add(new Stocks(this.ticker, this.buyPrice, this.quantity));
-                    // separate a line for the buffered reader to read in more users
-                    
+                    users.get(users.size() - 1).stocks.add(new Stocks(this.ticker, this.buyPrice, this.quantity));           
                 }
 
                 // if the buffered reader reads in no more users,

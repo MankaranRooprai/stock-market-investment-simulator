@@ -64,7 +64,7 @@ public class Login extends javax.swing.JFrame {
         this.signup.setVisible(false);
         this.or.setVisible(false);
         this.setVisible(false);
-        StockScreen stockScreen = new StockScreen();
+        StockScreen stockScreen = new StockScreen(this, this.investGame, this.user);
         stockScreen.setVisible(true);
     }
     
@@ -82,15 +82,13 @@ public class Login extends javax.swing.JFrame {
     public void newUser(double balance) {
         try {
             this.investGame.addUser(this.userName, this.passWord, balance);
+            this.user = new User(this.userName, this.passWord, balance);
             this.setVisible(false);
-            StockScreen stockScreen = new StockScreen();
+            StockScreen stockScreen = new StockScreen(this, this.investGame, this.user);
+            stockScreen.setVisible(true);
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public User getUser() {
-        return this.user;
     }
     
     /**

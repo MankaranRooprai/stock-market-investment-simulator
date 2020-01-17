@@ -21,7 +21,7 @@ public class InvestGame {
     // create instance of stock data
     StockData stockData;
 
-    User currentUser = null;
+    User currentUser;
 
     private int accountNumber;
 
@@ -96,12 +96,21 @@ public class InvestGame {
     }
 
     // method to buy stock
-    public void buyStock(String ticker, String password, double quantity) throws IOException {
+    public void buyStock(User currentUser, String ticker, String password, double quantity) throws IOException {
+        System.out.println("BUYING");
         // if the password entered by player is correct,
-        if (!this.currentUser.getPassword(password).equals("")) {
+        if (!currentUser.getPassword(password).equals("")) {
+            System.out.println("DOing the buying");
             // buy the stock
             this.stockData.buyStock(ticker, currentUser, quantity);
+            this.userInfo.writeToFile(this.users);
+            System.out.println(currentUser.getBalance());
         }
+    }
+    
+    // returns the current user
+    public User getCurrentUser() {
+        return this.currentUser;
     }
 
 }

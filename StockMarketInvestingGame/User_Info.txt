@@ -1,6 +1,38 @@
 0
 Mankaran
 pass
-50000.0
+20000.0
 Owned Stocks:
+None
+
+
+1
+Tommy
+dude
+50000.0
+Owned Stocks: 
+None
+
+
+2
+Dude
+perfect
+100000.0
+Owned Stocks: 
+None
+
+
+3
+Hello
+hi
+20000.0
+Owned Stocks: 
+None
+
+
+4
+Stocks
+stock
+100000.0
+Owned Stocks: 
 None
