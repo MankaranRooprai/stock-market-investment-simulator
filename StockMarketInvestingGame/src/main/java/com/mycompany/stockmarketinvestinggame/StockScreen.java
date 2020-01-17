@@ -24,7 +24,6 @@ public class StockScreen extends javax.swing.JFrame {
     private String tickerSymbol;
     private String ask;
     private String bid;
-    private int quantity;
 
     public StockScreen() throws IOException {
         initComponents();
@@ -207,21 +206,34 @@ public class StockScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void buyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyButtonActionPerformed
-        
-        try {
-            int row = this.table.getSelectedRow();
-            if (!(row == -1)) {
-                this.tickerSymbol = (String) this.model.getValueAt(row, 0);
-            }
-            this.quantity = Integer.parseInt(this.numberOfShares.getText());
-            String password = JOptionPane.showInputDialog(null, "Please enter your password");
-            if (this.user.getPassword(password) == null) {
-                JOptionPane.showMessageDialog(null, "Invalid Password");
+        // get selected row 
+        int row = this.table.getSelectedRow();
+        // get quantity of shares user would like to buy
+        double quantity = Double.parseDouble(this.numberOfShares.getText());
+
+        if (row == -1 || quantity == 0) {
+            JOptionPane.showMessageDialog(null, "Please select the stock and enter the number of shares you would like to purchase.");
+        } else {
+            // get ticker symbol of selected row 
+            String value = this.table.getModel().getValueAt(row, 0).toString();
+            // get password of user 
+            String password = JOptionPane.showInputDialog("Please enter your password to buy shares of " + value);
+            // if password entered is correct,
+            if (this.investGame.checkPassword(password)) {
+                // ask user to confirm their order
+                int option = JOptionPane.showConfirmDialog(null, "Would you like to put an order in for " + quantity + " shares of " + value);
+                // if YES is selected, then buy stocks and tell user they have successfully purchased shares
+                if (option == 0) {
+                    try {
+                        this.investGame.buyStock(value, password, quantity);
+                    } catch (IOException ex) {
+                        Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    JOptionPane.showMessageDialog(null, "You have successfully purchased " + quantity + " shares of " + value + "!");
+                } 
             } else {
-                this.investGame.buyStock(this.tickerSymbol, this.quantity, password);
+                JOptionPane.showMessageDialog(null, "Incorrect Password");
             }
-        } catch (IOException ex) {
-            Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_buyButtonActionPerformed

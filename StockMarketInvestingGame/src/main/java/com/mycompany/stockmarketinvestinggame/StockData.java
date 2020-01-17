@@ -7,7 +7,6 @@ package com.mycompany.stockmarketinvestinggame;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
@@ -19,16 +18,11 @@ public class StockData {
     
     // instance of stock class and users arraylist
     Stock stock;
-    ArrayList<User> users;
-    
-    // instance variables
-    int accountNumber;
-    boolean decreaseBalance = false;
+    Stocks userStocks;
     
     // contructor that takes in the account number and the users arraylist
-    public StockData(ArrayList<User> users, int accountNumber) {
-        this.users = users;
-        this.accountNumber = accountNumber;
+    public StockData() {
+        
     }
     
     // method to get asking price for stock
@@ -48,7 +42,7 @@ public class StockData {
     }
     
     public String getStockBid(String ticker) throws IOException {
-        
+
         BigDecimal bidPrice;
         
         if ((this.stock = YahooFinance.get(ticker)) != null) {
@@ -59,21 +53,19 @@ public class StockData {
         }
     }
     
-    public Stocks buyStock(String ticker, int quantity, String password) throws IOException {
+    public void buyStock(String ticker, User user, double quantity) throws IOException {
         this.stock = YahooFinance.get(ticker);
-        this.decreaseBalance = false;
         
-        double askPrice;
-        Stocks s = null;
+        BigDecimal askPrice;
         
         if ((this.stock = YahooFinance.get(ticker)) != null) {
-            askPrice = this.stock.getQuote().getAsk().doubleValue() * quantity;
-            this.users.get(this.accountNumber).setBalance(Double.toString(askPrice), decreaseBalance);
-            s = new Stocks(ticker, askPrice, quantity);
+            askPrice = this.stock.getQuote().getAsk();
+            // set user's balance and add the stock to their stocks arraylist
+            double decreasePrice = askPrice.doubleValue() * quantity;
+            user.decreaseBalance(decreasePrice);
+            user.stocks.add(new Stocks(ticker, askPrice.doubleValue(), quantity));
+            System.out.println(user.getBalance());
         }
-        
-        return s;
-        
     }
     
 }

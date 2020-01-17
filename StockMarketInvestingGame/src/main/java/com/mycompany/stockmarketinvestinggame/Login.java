@@ -17,13 +17,12 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     // instance variables
-    private InvestGame investGame;
+    private InvestGame investGame = new InvestGame();
     private User user;
+    
     private String userName;
-    private String pass;
-    private String balance;
-    private boolean loggedIn = false;
-    private int accountNumber;
+    private String passWord;
+    private double balance;
 
     /**
      * Creates new form Game
@@ -50,8 +49,6 @@ public class Login extends javax.swing.JFrame {
     }
 
     public void enter() {
-        this.userName = this.newUsername.getText();
-        this.pass = this.newPassword.getText();
         this.enter.setVisible(false);
         this.newUsername.setVisible(false);
         this.newPassword.setVisible(false);
@@ -61,8 +58,6 @@ public class Login extends javax.swing.JFrame {
     }
 
     public void login() throws IOException {
-        this.loggedIn = true;
-        this.investGame.users.get(accountNumber);
         this.username.setVisible(false);
         this.password.setVisible(false);
         this.login.setVisible(false);
@@ -82,6 +77,16 @@ public class Login extends javax.swing.JFrame {
         this.newUsername.setVisible(true);
         this.newPassword.setVisible(true);
         this.enter.setVisible(true);
+    }
+    
+    public void newUser(double balance) {
+        try {
+            this.investGame.addUser(this.userName, this.passWord, balance);
+            this.setVisible(false);
+            StockScreen stockScreen = new StockScreen();
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public User getUser() {
@@ -255,22 +260,29 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
+        
+        // set instance variables equal to username and password entered by player
         this.userName = this.username.getText();
-        this.pass = this.password.getText();
-        if (this.investGame.checkUser(userName, pass) != null) {
+        this.passWord = this.password.getText();
+        
+        // check if the user exists,
+        if (this.investGame.checkUser(this.userName, this.passWord) != null) {
+            // set user to user obtained
+            this.user = this.investGame.checkUser(this.userName, this.passWord);
+            // method that sets screen
             try {
-                this.user = this.investGame.checkUser(userName, pass);
                 login();
             } catch (IOException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
+        // if no user is found, tell player that it's an invalid login
         } else {
-            JOptionPane.showMessageDialog(null, "Invalid Login");
+            JOptionPane.showMessageDialog(null, "Invalid Login.");
         }
     }//GEN-LAST:event_loginActionPerformed
 
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
-        // set some components to false
+        //called sign up method
         signUp();
     }//GEN-LAST:event_signupActionPerformed
 
@@ -279,55 +291,45 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_newUsernameActionPerformed
 
     private void enterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterActionPerformed
-        // get new usernmae and password entered
-
-        if (this.investGame.checkUsername(this.newUsername.getText()) == false) {
-            enter();
+        // store new username
+        this.userName = this.newUsername.getText();
+        this.passWord = this.newPassword.getText();
+        
+        // if username is same as existing user, tell player to try new username
+        if (this.investGame.checkUsername(this.userName)) {
+            JOptionPane.showMessageDialog(null, "This username already exists. Please choose another one.");
+        // otherwise, display next screen
         } else {
-            JOptionPane.showMessageDialog(null, "This username already exists please try again.");
+            enter();
         }
+        
     }//GEN-LAST:event_enterActionPerformed
 
     private void twentyThousandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twentyThousandActionPerformed
-        // set the user's balance to twenty thousand dollars and create a new user 
-        try {
-            this.balance = "20000.0";
-            this.investGame.addUser(this.userName, this.pass, this.balance);
-            balance();
-            this.dispose();
-            StockScreen stockScreen = new StockScreen();
-            stockScreen.setVisible(loggedIn);
-        } catch (IOException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // set balance to twenty thousand dollars
+        this.balance = 20000.0;
+        
+        // create a new user
+        newUser(this.balance);
+        
     }//GEN-LAST:event_twentyThousandActionPerformed
 
     private void fiftyThousandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiftyThousandActionPerformed
-        // set the user's balance to fifty thousand dollars and create a new user 
-        try {
-            this.balance = "50000.0";
-            this.investGame.addUser(this.userName, this.pass, this.balance);
-            balance();
-            this.dispose();
-            StockScreen stockScreen = new StockScreen();
-            stockScreen.setVisible(loggedIn);
-        } catch (IOException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // set balance to fifty thousand dollars
+        this.balance = 50000.0;
+        
+        // create a new user
+        newUser(this.balance);
+        
     }//GEN-LAST:event_fiftyThousandActionPerformed
 
     private void hundredThousandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hundredThousandActionPerformed
-        // set the user's balance to one hundred thousand dollars and create a new user 
-        try {
-            this.balance = "100000.0";
-            this.investGame.addUser(this.userName, this.pass, this.balance);
-            balance();
-            this.dispose();
-            StockScreen stockScreen = new StockScreen();
-            stockScreen.setVisible(loggedIn);
-        } catch (IOException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // set balance to hundred thousand dollars
+        this.balance = 100000.0;
+        
+        // create a new user
+        newUser(this.balance);
+        
     }//GEN-LAST:event_hundredThousandActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
