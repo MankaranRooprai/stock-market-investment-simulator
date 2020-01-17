@@ -13,9 +13,9 @@ public class Stocks {
     
     private String ticker;
     private double buyPrice;
-    private int quantity;
+    private double quantity;
     
-    public Stocks(String ticker, double buyPrice, int quantity) {
+    public Stocks(String ticker, double buyPrice, double quantity) {
         this.ticker = ticker;
         this.buyPrice = buyPrice;
         this.quantity = quantity;
@@ -37,7 +37,7 @@ public class Stocks {
         this.buyPrice = buyPrice;
     }
     
-    public int getQuantity() {
+    public double getQuantity() {
         return this.quantity;
     }
     

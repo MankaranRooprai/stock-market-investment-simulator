@@ -1,0 +1,6 @@
+0
+Mankaran
+pass
+50000.0
+Owned Stocks:
+None

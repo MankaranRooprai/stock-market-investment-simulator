@@ -16,17 +16,16 @@ public class User {
     // instance variables
     private String username;
     private String password;
-    private String balance;
+    private double balance;
     private int accountNumber;
     ArrayList<Stocks> stocks = new ArrayList<>();
     
     // constructor 
-    public User(String username, String password, String balance, int accountNumber) {
+    public User(String username, String password, double balance) {
         // set user values equal to instance variables
         this.username = username;
         this.password = password;
         this.balance = balance;
-        this.accountNumber = accountNumber;
     }
     
     /**
@@ -46,7 +45,7 @@ public class User {
         if (this.password.equals(password)) {
             return this.password;
         } else {
-            return null;
+            return "";
         }
     }
     
@@ -67,22 +66,16 @@ public class User {
      * get balance of user
      * @return balance
      */
-    public String getBalance() {
+    public double getBalance() {
         return this.balance;
     }
     
     /**
-     * sets new balance for user
-     * @param newBalance
-     * @param decreaseBalance
+     * decreases the balance
+     * @param decreaseAmount value to decrease balance by
      */
-    public void setBalance(String newBalance, boolean decreaseBalance) {
-        if (decreaseBalance) {
-            int currentBalance = Integer.parseInt(this.balance) - Integer.parseInt(newBalance);
-            this.balance = String.valueOf(currentBalance);
-        } else {
-            this.balance += newBalance;
-        }
+    public void decreaseBalance(double decreaseAmount) {
+        this.balance -= decreaseAmount;
     }
     
     /**
