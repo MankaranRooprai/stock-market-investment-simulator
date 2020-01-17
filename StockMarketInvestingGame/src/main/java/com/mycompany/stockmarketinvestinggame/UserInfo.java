@@ -70,7 +70,7 @@ public class UserInfo {
         }
 
     }
-
+    
     // method that writes user data to the text file
     public void writeToFile(ArrayList<User> users) throws IOException {
 
