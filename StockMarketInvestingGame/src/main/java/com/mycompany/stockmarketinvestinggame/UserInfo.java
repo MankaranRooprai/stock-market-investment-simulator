@@ -44,7 +44,7 @@ public class UserInfo {
         if (this.file.exists() && this.file.length() != 0) {
             // while the buffered reader is still reading in values,   
             while (this.br != null) {
-                
+
                 // read in the username, password, and balance of each user
                 this.accountNumber = Integer.parseInt(this.br.readLine());
                 this.username = this.br.readLine();
@@ -52,33 +52,33 @@ public class UserInfo {
                 this.balance = this.br.readLine();
                 this.br.readLine();
                 if (this.br.readLine().equals("None")) {
-                    
+
                     // skip a line
                     this.br.readLine();
-                    
+
                     // create the new user
                     User user = new User(this.username, this.password, Double.parseDouble(this.balance));
-                    
+
                     // add the user to the arraylist
                     users.add(user);
                     users.get(users.size() - 1).setAccountNumber(this.accountNumber);
-                    
+
                 } else {
-                    
-                    // skip a line and read in the ticker, buy price, and quantity
+
+                    // read in the ticker, buy price, and quantity
                     this.ticker = this.br.readLine();
                     this.buyPrice = Double.parseDouble(this.br.readLine());
                     this.quantity = Double.parseDouble(this.br.readLine());
-                    
+
                     // skip a line
                     this.br.readLine();
-                    
+
                     // create the new user
                     User user = new User(this.username, this.password, Double.parseDouble(this.balance));
                     // add the user to the arraylist
                     users.add(user);
                     users.get(users.size() - 1).setAccountNumber(this.accountNumber);
-                    users.get(users.size() - 1).stocks.add(new Stocks(this.ticker, this.buyPrice, this.quantity));           
+                    users.get(users.size() - 1).stocks.add(new Stocks(this.ticker, this.buyPrice, this.quantity));
                 }
 
                 // if the buffered reader reads in no more users,
@@ -91,13 +91,13 @@ public class UserInfo {
         }
 
     }
-    
+
     // method that writes user data to the text file
     public void writeToFile(ArrayList<User> users) throws IOException {
-        
+
         PrintWriter pw = new PrintWriter(this.file);
         pw.close();
-        
+
         for (int i = 0; i < users.size(); i++) {
             // write user data to file
             if (this.file.length() == 0) {
@@ -110,9 +110,11 @@ public class UserInfo {
                 if (users.get(i).stocks.isEmpty()) {
                     this.writer.write("None" + "\n");
                 } else {
-                    this.writer.write("\n" + users.get(i).stocks.get(i).getTicker() + "\n");
-                    this.writer.write(users.get(i).stocks.get(i).getBuyPrice() + "\n");
-                    this.writer.write(users.get(i).stocks.get(i).getQuantity() + "\n");
+                    for (int k = 0; k < users.get(i).stocks.size(); k++) {
+                        this.writer.write("\n" + users.get(i).stocks.get(k).getTicker() + "\n");
+                        this.writer.write(users.get(i).stocks.get(k).getBuyPrice() + "\n");
+                        this.writer.write(users.get(i).stocks.get(k).getQuantity() + "\n");
+                    }
                 }
                 this.writer.flush();
             } else {
@@ -125,9 +127,11 @@ public class UserInfo {
                 if (users.get(i).stocks.isEmpty()) {
                     this.writer.write("None" + "\n");
                 } else {
-                    this.writer.write(users.get(i).stocks.get(i).getTicker() + "\n");
-                    this.writer.write(users.get(i).stocks.get(i).getBuyPrice() + "\n");
-                    this.writer.write(users.get(i).stocks.get(i).getQuantity() + "\n");
+                    for (int j = 0; j < users.get(i).stocks.size(); j++) {
+                        this.writer.write(users.get(i).stocks.get(j).getTicker() + "\n");
+                        this.writer.write(users.get(i).stocks.get(j).getBuyPrice() + "\n");
+                        this.writer.write(users.get(i).stocks.get(j).getQuantity() + "\n");
+                    }
                 }
                 this.writer.flush();
             }

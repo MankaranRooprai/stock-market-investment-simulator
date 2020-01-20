@@ -1,38 +1,21 @@
 0
 Mankaran
 pass
-20000.0
+4760.48
 Owned Stocks:
-None
+
+TSLA
+512.08
+3.0
+
+TSLA
+512.08
+4.0
 
 
 1
 Tommy
 dude
 50000.0
-Owned Stocks: 
-None
-
-
-2
-Dude
-perfect
-100000.0
-Owned Stocks: 
-None
-
-
-3
-Hello
-hi
-20000.0
-Owned Stocks: 
-None
-
-
-4
-Stocks
-stock
-100000.0
 Owned Stocks: 
 None

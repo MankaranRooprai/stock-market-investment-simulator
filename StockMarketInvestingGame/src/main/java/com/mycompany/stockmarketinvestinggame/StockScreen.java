@@ -30,9 +30,9 @@ public class StockScreen extends javax.swing.JFrame {
         this.investGame = new InvestGame();
         model = (DefaultTableModel) this.table.getModel();
         this.setResizable(false);
-      
+
     }
-    
+
     public StockScreen(Login screen, InvestGame investGame, User currentUser) throws IOException {
         initComponents();
         this.investGame = investGame;
@@ -226,10 +226,15 @@ public class StockScreen extends javax.swing.JFrame {
         } else {
             // get ticker symbol of selected row 
             String value = this.table.getModel().getValueAt(row, 0).toString();
+            
+            String username = JOptionPane.showInputDialog("Please enter your username to buy shares of " + value);
             // get password of user 
             String password = JOptionPane.showInputDialog("Please enter your password to buy shares of " + value);
-            // if password entered is correct,
-            if (this.investGame.checkPassword(password)) {
+            
+            User comparingUser = this.investGame.checkUser(username, password);
+            
+            // if the user information is correct
+            if (comparingUser.getUsername().equals(this.currentUser.getUsername()) && comparingUser.getPassword(password).equals(this.currentUser.getPassword(password))) {
                 System.out.println("here1");
                 // ask user to confirm their order
                 int option = JOptionPane.showConfirmDialog(null, "Would you like to put an order in for " + quantity + " shares of " + value);
@@ -237,15 +242,15 @@ public class StockScreen extends javax.swing.JFrame {
                 if (option == 0) {
                     try {
                         System.out.println("Here2");
-                        this.investGame.buyStock(currentUser, value, password, quantity);
+                        this.investGame.buyStock(this.currentUser, value, quantity);
+                        JOptionPane.showMessageDialog(null, "You have successfully purchased " + quantity + " shares of " + value + "!");
                     } catch (IOException ex) {
                         System.out.println("ERROR");
                         Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    JOptionPane.showMessageDialog(null, "You have successfully purchased " + quantity + " shares of " + value + "!");
-                } 
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Incorrect Password");
+                JOptionPane.showMessageDialog(null, "Incorrect User Information");
             }
         }
 
