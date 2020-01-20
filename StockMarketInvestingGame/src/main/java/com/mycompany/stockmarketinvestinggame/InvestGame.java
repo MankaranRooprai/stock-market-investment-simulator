@@ -99,7 +99,7 @@ public class InvestGame {
     public void buyStock(User currentUser, String ticker, String password, double quantity) throws IOException {
         System.out.println("BUYING");
         // if the password entered by player is correct,
-        if (!currentUser.getPassword(password).equals("")) {
+        if (currentUser.getPassword(password).equals(password)) {
             System.out.println("DOing the buying");
             // buy the stock
             this.stockData.buyStock(ticker, currentUser, quantity);
