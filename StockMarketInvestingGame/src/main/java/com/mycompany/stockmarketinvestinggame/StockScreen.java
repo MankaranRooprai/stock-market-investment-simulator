@@ -242,8 +242,11 @@ public class StockScreen extends javax.swing.JFrame {
                 if (option == 0) {
                     try {
                         System.out.println("Here2");
-                        this.investGame.buyStock(this.currentUser, value, quantity);
-                        JOptionPane.showMessageDialog(null, "You have successfully purchased " + quantity + " shares of " + value + "!");
+                        if (this.investGame.buyStock(this.currentUser, value, quantity)) {
+                            JOptionPane.showMessageDialog(null, "You have successfully purchased " + quantity + " shares of " + value + "!");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No Sufficient Funds");
+                        }
                     } catch (IOException ex) {
                         System.out.println("ERROR");
                         Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);

@@ -1,21 +1,15 @@
 0
 Mankaran
 pass
-4760.48
+20386.0
 Owned Stocks:
 
 TSLA
-512.08
-3.0
+527.8
+5.0
 
 TSLA
-512.08
-4.0
+539.5
+50.0
 
-
-1
-Tommy
-dude
-50000.0
-Owned Stocks: 
-None
+End

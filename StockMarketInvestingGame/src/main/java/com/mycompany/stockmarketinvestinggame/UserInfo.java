@@ -32,6 +32,7 @@ public class UserInfo {
     private String ticker;
     private double buyPrice;
     private double quantity;
+    boolean anotherStock = true;
 
     // constructor
     public UserInfo(ArrayList<User> users) throws IOException {
@@ -64,21 +65,25 @@ public class UserInfo {
                     users.get(users.size() - 1).setAccountNumber(this.accountNumber);
 
                 } else {
-
-                    // read in the ticker, buy price, and quantity
-                    this.ticker = this.br.readLine();
-                    this.buyPrice = Double.parseDouble(this.br.readLine());
-                    this.quantity = Double.parseDouble(this.br.readLine());
-
-                    // skip a line
-                    this.br.readLine();
-
                     // create the new user
                     User user = new User(this.username, this.password, Double.parseDouble(this.balance));
                     // add the user to the arraylist
                     users.add(user);
                     users.get(users.size() - 1).setAccountNumber(this.accountNumber);
-                    users.get(users.size() - 1).stocks.add(new Stocks(this.ticker, this.buyPrice, this.quantity));
+                    
+                    String end = "";
+
+                    while (!end.equals("End")) {
+                        // read in the ticker, buy price, and quantity
+                        this.ticker = this.br.readLine();
+                        this.buyPrice = Double.parseDouble(this.br.readLine());
+                        this.quantity = Double.parseDouble(this.br.readLine());
+                        users.get(users.size() - 1).stocks.add(new Stocks(this.ticker, this.buyPrice, this.quantity));
+                        this.br.readLine();
+                        end = this.br.readLine();
+                    }
+                    
+                    
                 }
 
                 // if the buffered reader reads in no more users,
@@ -115,6 +120,7 @@ public class UserInfo {
                         this.writer.write(users.get(i).stocks.get(k).getBuyPrice() + "\n");
                         this.writer.write(users.get(i).stocks.get(k).getQuantity() + "\n");
                     }
+                    this.writer.write("\nEnd\n");
                 }
                 this.writer.flush();
             } else {
@@ -132,6 +138,7 @@ public class UserInfo {
                         this.writer.write(users.get(i).stocks.get(j).getBuyPrice() + "\n");
                         this.writer.write(users.get(i).stocks.get(j).getQuantity() + "\n");
                     }
+                    this.writer.write("\nEnd\n");
                 }
                 this.writer.flush();
             }

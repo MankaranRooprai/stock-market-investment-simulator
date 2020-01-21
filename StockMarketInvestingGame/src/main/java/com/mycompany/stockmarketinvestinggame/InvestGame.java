@@ -74,7 +74,7 @@ public class InvestGame {
         // tells us whether or not user exists
         boolean validUser = false;
         User user = null;
-        
+
         // iterate through users arraylist to check if username and password match any of the existing users
         for (int i = 0; i < this.users.size(); i++) {
             // if user information exists,
@@ -97,16 +97,16 @@ public class InvestGame {
     }
 
     // method to buy stock
-    public void buyStock(User currentUser, String ticker, double quantity) throws IOException {
-        System.out.println("BUYING");
-        // if the password entered by player is correct,
-            System.out.println("DOing the buying");
-            // buy the stock
-            this.stockData.buyStock(ticker, currentUser, quantity);
+    public boolean buyStock(User currentUser, String ticker, double quantity) throws IOException {
+        // buy the stock
+        if (this.stockData.buyStock(ticker, currentUser, quantity)) {
             this.userInfo.writeToFile(this.users);
-            System.out.println(currentUser.getBalance());
+            return true;
+        } else {
+            return false;
+        }
     }
-    
+
     // returns the current user
     public User getCurrentUser() {
         return this.currentUser;
