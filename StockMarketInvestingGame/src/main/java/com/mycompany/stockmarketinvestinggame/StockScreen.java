@@ -6,6 +6,7 @@
 package com.mycompany.stockmarketinvestinggame;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,6 +20,7 @@ public class StockScreen extends javax.swing.JFrame {
 
     private InvestGame investGame;
     private DefaultTableModel model;
+    private DefaultTableModel positionModel;
     private Login loginScreen;
     private String tickerSymbol;
     private String ask;
@@ -27,8 +29,6 @@ public class StockScreen extends javax.swing.JFrame {
 
     public StockScreen() throws IOException {
         initComponents();
-        this.investGame = new InvestGame();
-        model = (DefaultTableModel) this.table.getModel();
         this.setResizable(false);
 
     }
@@ -36,7 +36,11 @@ public class StockScreen extends javax.swing.JFrame {
     public StockScreen(Login screen, InvestGame investGame, User currentUser) throws IOException {
         initComponents();
         this.investGame = investGame;
-        model = (DefaultTableModel) this.table.getModel();
+        this.model = (DefaultTableModel) this.table.getModel();
+        this.positionModel = (DefaultTableModel) this.positions.getModel();
+        for (int i = 0; i < currentUser.stocks.size(); i++) {
+            this.positionModel.addRow(new Object[]{currentUser.stocks.get(i).getDate(), currentUser.stocks.get(i).getTime(), currentUser.stocks.get(i).getTicker(), currentUser.stocks.get(i).getPurchaseTotal(), currentUser.stocks.get(i).getQuantity(), currentUser.stocks.get(i).getBuyPrice()});
+        }
         this.setResizable(false);
         this.loginScreen = screen;
         this.currentUser = currentUser;
@@ -51,6 +55,7 @@ public class StockScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         searchField = new javax.swing.JTextField();
@@ -58,12 +63,16 @@ public class StockScreen extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         buyButton = new javax.swing.JButton();
-        sellButton = new javax.swing.JButton();
         numberOfShares = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        positions = new javax.swing.JTable();
+        sellButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane1.setBackground(new java.awt.Color(0, 0, 0));
 
         searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,14 +96,20 @@ public class StockScreen extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        table.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(table);
+        if (table.getColumnModel().getColumnCount() > 0) {
+            table.getColumnModel().getColumn(0).setResizable(false);
+            table.getColumnModel().getColumn(1).setResizable(false);
+            table.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         buyButton.setText("Buy");
         buyButton.addActionListener(new java.awt.event.ActionListener() {
@@ -103,14 +118,13 @@ public class StockScreen extends javax.swing.JFrame {
             }
         });
 
-        sellButton.setText("Sell");
-
         numberOfShares.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 numberOfSharesActionPerformed(evt);
             }
         });
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Please enter the amount of shares you'd like to purchase");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -120,32 +134,26 @@ public class StockScreen extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(239, 239, 239)
-                        .addComponent(searchButton))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(247, 247, 247)
-                        .addComponent(numberOfShares, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
-                        .addGap(75, 75, 75))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(buyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(sellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(225, 225, 225))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(164, 164, 164))))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(97, 97, 97)
+                                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(239, 239, 239)
+                                .addComponent(searchButton))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(247, 247, 247)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(buyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(numberOfShares, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,29 +162,73 @@ public class StockScreen extends javax.swing.JFrame {
                 .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(numberOfShares, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sellButton)
-                    .addComponent(buyButton)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(numberOfShares)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buyButton))
         );
 
         jTabbedPane1.addTab("Search", jPanel1);
+
+        positions.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Time", "Ticker Symbol", "Purchase", "Quantity", "Buy Price"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        positions.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(positions);
+        if (positions.getColumnModel().getColumnCount() > 0) {
+            positions.getColumnModel().getColumn(0).setResizable(false);
+            positions.getColumnModel().getColumn(2).setResizable(false);
+            positions.getColumnModel().getColumn(3).setResizable(false);
+            positions.getColumnModel().getColumn(4).setResizable(false);
+            positions.getColumnModel().getColumn(5).setResizable(false);
+        }
+
+        sellButton.setText("Sell");
+        sellButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sellButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 604, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(sellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(244, 244, 244))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 644, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addComponent(sellButton)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Current Positions", jPanel5);
@@ -185,7 +237,9 @@ public class StockScreen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,7 +273,7 @@ public class StockScreen extends javax.swing.JFrame {
         // get selected row 
         int row = this.table.getSelectedRow();
         // get quantity of shares user would like to buy
-        double quantity = Double.parseDouble(this.numberOfShares.getText());
+        int quantity = Integer.parseInt(this.numberOfShares.getText());
 
         if (row == -1 || quantity == 0) {
             JOptionPane.showMessageDialog(null, "Please select the stock and enter the number of shares you would like to purchase.");
@@ -237,13 +291,15 @@ public class StockScreen extends javax.swing.JFrame {
             if (comparingUser.getUsername().equals(this.currentUser.getUsername()) && comparingUser.getPassword(password).equals(this.currentUser.getPassword(password))) {
                 System.out.println("here1");
                 // ask user to confirm their order
-                int option = JOptionPane.showConfirmDialog(null, "Would you like to put an order in for " + quantity + " shares of " + value);
+                int option = JOptionPane.showConfirmDialog(null, "Would you like to put an order in for " + quantity + " shares of " + value + "?");
                 // if YES is selected, then buy stocks and tell user they have successfully purchased shares
                 if (option == 0) {
                     try {
                         System.out.println("Here2");
                         if (this.investGame.buyStock(this.currentUser, value, quantity)) {
                             JOptionPane.showMessageDialog(null, "You have successfully purchased " + quantity + " shares of " + value + "!");
+                            ArrayList<Stocks> s = this.currentUser.stocks;
+                            this.positionModel.addRow(new Object[]{s.get(s.size() - 1).getDate(), s.get(s.size() - 1).getTime(), s.get(s.size() - 1).getTicker(), s.get(s.size() - 1).getPurchaseTotal(), s.get(s.size() - 1).getQuantity(), s.get(s.size() - 1).getBuyPrice()});
                         } else {
                             JOptionPane.showMessageDialog(null, "No Sufficient Funds");
                         }
@@ -260,8 +316,54 @@ public class StockScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_buyButtonActionPerformed
 
     private void numberOfSharesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numberOfSharesActionPerformed
-
+        // get selected row 
+        int row = this.positions.getSelectedRow();
+        // get quantity of shares user would like to buy
+        int quantity = Integer.parseInt(this.numberOfShares.getText());
+        
+        if (row == -1 || quantity == 0) {
+            JOptionPane.showMessageDialog(null, "Please select the stock and enter the number of shares you would like to sell.");
+        } else {
+            // get ticker symbol of selected row 
+            String value = this.table.getModel().getValueAt(row, 0).toString();
+            
+            String username = JOptionPane.showInputDialog("Please enter your username to sell shares of " + value);
+            // get password of user 
+            String password = JOptionPane.showInputDialog("Please enter your password to sell shares of " + value);
+            
+            User comparingUser = this.investGame.checkUser(username, password);
+            
+            // if the user information is correct
+            if (comparingUser.getUsername().equals(this.currentUser.getUsername()) && comparingUser.getPassword(password).equals(this.currentUser.getPassword(password))) {
+                System.out.println("here1");
+                // ask user to confirm their order
+                int option = JOptionPane.showConfirmDialog(null, "Would you like to put an order in for " + quantity + " shares of " + value + "?");
+                // if YES is selected, then buy stocks and tell user they have successfully purchased shares
+                if (option == 0) {
+                    try {
+                        System.out.println("Here2");
+                        if (this.investGame.buyStock(this.currentUser, value, quantity)) {
+                            JOptionPane.showMessageDialog(null, "You have successfully purchased " + quantity + " shares of " + value + "!");
+                            ArrayList<Stocks> s = this.currentUser.stocks;
+                            this.positionModel.addRow(new Object[]{s.get(s.size() - 1).getDate(), s.get(s.size() - 1).getTime(), s.get(s.size() - 1).getTicker(), s.get(s.size() - 1).getPurchaseTotal(), s.get(s.size() - 1).getQuantity(), s.get(s.size() - 1).getBuyPrice()});
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No Sufficient Funds");
+                        }
+                    } catch (IOException ex) {
+                        System.out.println("ERROR");
+                        Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Incorrect User Information");
+            }
+        }
+        
     }//GEN-LAST:event_numberOfSharesActionPerformed
+
+    private void sellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sellButtonActionPerformed
+        
+    }//GEN-LAST:event_sellButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -307,9 +409,12 @@ public class StockScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField numberOfShares;
+    private javax.swing.JTable positions;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
     private javax.swing.JButton sellButton;

@@ -29,10 +29,12 @@ public class UserInfo {
     private String password;
     private String balance;
     private int accountNumber;
+    public String date;
+    private String time;
     private String ticker;
     private double buyPrice;
-    private double quantity;
-    boolean anotherStock = true;
+    private int quantity;
+    private double purchaseTotal;
 
     // constructor
     public UserInfo(ArrayList<User> users) throws IOException {
@@ -43,7 +45,7 @@ public class UserInfo {
 
         // if the file exists and has values in it, go ahead and read it
         if (this.file.exists() && this.file.length() != 0) {
-            // while the buffered reader is still reading in values,   
+            // while the buffered reader is still reading in values,
             while (this.br != null) {
 
                 // read in the username, password, and balance of each user
@@ -52,37 +54,56 @@ public class UserInfo {
                 this.password = this.br.readLine();
                 this.balance = this.br.readLine();
                 this.br.readLine();
+
+                // create a new user
+                User user = new User(this.username, this.password, Double.parseDouble(this.balance));
+
+                // add the user to the arraylist
+                users.add(user);
+                users.get(users.size() - 1).setAccountNumber(this.accountNumber);
+
                 if (this.br.readLine().equals("None")) {
 
                     // skip a line
                     this.br.readLine();
 
-                    // create the new user
-                    User user = new User(this.username, this.password, Double.parseDouble(this.balance));
-
-                    // add the user to the arraylist
-                    users.add(user);
-                    users.get(users.size() - 1).setAccountNumber(this.accountNumber);
-
                 } else {
-                    // create the new user
-                    User user = new User(this.username, this.password, Double.parseDouble(this.balance));
-                    // add the user to the arraylist
-                    users.add(user);
-                    users.get(users.size() - 1).setAccountNumber(this.accountNumber);
-                    
-                    String end = "";
 
+                    // empty string
+                    String end = "";
+                    int counter = 0;
+
+                    // while end does not store the word end, keep reading in stocks
                     while (!end.equals("End")) {
-                        // read in the ticker, buy price, and quantity
-                        this.ticker = this.br.readLine();
-                        this.buyPrice = Double.parseDouble(this.br.readLine());
-                        this.quantity = Double.parseDouble(this.br.readLine());
-                        users.get(users.size() - 1).stocks.add(new Stocks(this.ticker, this.buyPrice, this.quantity));
-                        this.br.readLine();
-                        end = this.br.readLine();
+                        if (counter == 0) {
+                            // read in the date-time, ticker, buy price, and quantity
+                            this.date = this.br.readLine();
+                            this.time = this.br.readLine();
+                            this.ticker = this.br.readLine();
+                            this.buyPrice = Double.parseDouble(this.br.readLine());
+                            this.quantity = Integer.parseInt(this.br.readLine());
+                            this.purchaseTotal = Double.parseDouble(this.br.readLine());
+                            users.get(users.size() - 1).stocks.add(new Stocks(this.date, this.time, this.ticker, this.buyPrice, this.quantity, this.purchaseTotal));
+                            this.br.readLine();
+                            end = this.br.readLine();
+                        } else {
+                            // read in the ticker, buy price, and quantity
+                            this.date = end;
+                            this.time = this.br.readLine();
+                            this.ticker = this.br.readLine();
+                            this.buyPrice = Double.parseDouble(this.br.readLine());
+                            this.quantity = Integer.parseInt(this.br.readLine());
+                            this.purchaseTotal = Double.parseDouble(this.br.readLine());
+                            users.get(users.size() - 1).stocks.add(new Stocks(this.date, this.time, this.ticker, this.buyPrice, this.quantity, this.purchaseTotal));
+                            this.br.readLine();
+                            end = this.br.readLine();
+                        }
+                        counter++;
                     }
+
                     
+                    // skip one line
+                    this.br.readLine();
                     
                 }
 
@@ -116,9 +137,12 @@ public class UserInfo {
                     this.writer.write("None" + "\n");
                 } else {
                     for (int k = 0; k < users.get(i).stocks.size(); k++) {
-                        this.writer.write("\n" + users.get(i).stocks.get(k).getTicker() + "\n");
+                        this.writer.write("\n" + users.get(i).stocks.get(k).getDate() + "\n");
+                        this.writer.write(users.get(i).stocks.get(k).getTime() + "\n");
+                        this.writer.write(users.get(i).stocks.get(k).getTicker() + "\n");
                         this.writer.write(users.get(i).stocks.get(k).getBuyPrice() + "\n");
                         this.writer.write(users.get(i).stocks.get(k).getQuantity() + "\n");
+                        this.writer.write(users.get(i).stocks.get(k).getPurchaseTotal() + "\n");
                     }
                     this.writer.write("\nEnd\n");
                 }
@@ -134,9 +158,12 @@ public class UserInfo {
                     this.writer.write("None" + "\n");
                 } else {
                     for (int j = 0; j < users.get(i).stocks.size(); j++) {
+                        this.writer.write("\n" + users.get(i).stocks.get(j).getDate() + "\n");
+                        this.writer.write(users.get(i).stocks.get(j).getTime() + "\n");
                         this.writer.write(users.get(i).stocks.get(j).getTicker() + "\n");
                         this.writer.write(users.get(i).stocks.get(j).getBuyPrice() + "\n");
                         this.writer.write(users.get(i).stocks.get(j).getQuantity() + "\n");
+                        this.writer.write(users.get(i).stocks.get(j).getPurchaseTotal() + "\n");
                     }
                     this.writer.write("\nEnd\n");
                 }

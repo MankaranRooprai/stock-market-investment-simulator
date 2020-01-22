@@ -11,18 +11,36 @@ package com.mycompany.stockmarketinvestinggame;
  */
 public class Stocks {
     
+    private String date;
+    private String time;
     private String ticker;
     private double buyPrice;
-    private double quantity;
+    private int quantity;
+    private double purchaseTotal;
     
-    public Stocks(String ticker, double buyPrice, double quantity) {
+    public Stocks(String date, String time, String ticker, double buyPrice, int quantity, double purchaseTotal) {
+        this.date = date;
+        this.time = time;
         this.ticker = ticker;
         this.buyPrice = buyPrice;
         this.quantity = quantity;
+        this.purchaseTotal = purchaseTotal;
+    }
+    
+    public String getDate() {
+        return this.date;
+    }
+    
+    public String getTime() {
+        return this.time;
     }
     
     public String getTicker() {
         return this.ticker;
+    }
+    
+    public double getPurchaseTotal() {
+        return this.getBuyPrice() * this.getQuantity();
     }
     
     public void setTicker(String ticker) {
@@ -37,7 +55,7 @@ public class Stocks {
         this.buyPrice = buyPrice;
     }
     
-    public double getQuantity() {
+    public int getQuantity() {
         return this.quantity;
     }
     

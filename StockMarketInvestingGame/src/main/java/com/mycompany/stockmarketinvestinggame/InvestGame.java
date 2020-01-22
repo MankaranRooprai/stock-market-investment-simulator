@@ -97,9 +97,11 @@ public class InvestGame {
     }
 
     // method to buy stock
-    public boolean buyStock(User currentUser, String ticker, double quantity) throws IOException {
+    public boolean buyStock(User currentUser, String ticker, int quantity) throws IOException {
+        System.out.println("buying");
         // buy the stock
         if (this.stockData.buyStock(ticker, currentUser, quantity)) {
+            System.out.println("actually buying");
             this.userInfo.writeToFile(this.users);
             return true;
         } else {

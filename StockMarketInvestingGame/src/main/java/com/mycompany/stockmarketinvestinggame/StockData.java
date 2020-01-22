@@ -53,7 +53,7 @@ public class StockData {
         }
     }
 
-    public boolean buyStock(String ticker, User user, double quantity) throws IOException {
+    public boolean buyStock(String ticker, User user, int quantity) throws IOException {
         System.out.println("Buying stock");
         this.stock = YahooFinance.get(ticker);
 
@@ -69,7 +69,7 @@ public class StockData {
                 System.out.println(user.getBalance());
                 user.decreaseBalance(decreasePrice);
                 System.out.println(user.getBalance());
-                user.stocks.add(new Stocks(ticker, askPrice.doubleValue(), quantity));
+                user.stocks.add(new Stocks(java.time.LocalDate.now().toString(), java.time.LocalTime.now().toString(), ticker, askPrice.doubleValue(), quantity, decreasePrice));
                 canBuy = true;
             } else {
                 canBuy = false;
@@ -80,11 +80,9 @@ public class StockData {
 
     }
 
-    public void sellStock(String ticker, User user, double quantity) throws IOException {
+    public void sellStock(String ticker, User user, int quantity) throws IOException {
         System.out.println("Selling stock");
         this.stock = YahooFinance.get(ticker);
-
-        boolean canBuy = false;
 
         BigDecimal bidPrice;
 
