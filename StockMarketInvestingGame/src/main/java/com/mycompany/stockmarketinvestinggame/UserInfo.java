@@ -42,7 +42,11 @@ public class UserInfo {
         this.file = new File("User_Info.txt");
         this.writer = new FileWriter(this.file, true);
         this.br = new BufferedReader(new FileReader(this.file));
+        this.loadUsers(users);
+    }
 
+    // load all of the users
+    private void loadUsers(ArrayList<User> users) throws IOException {
         // if the file exists and has values in it, go ahead and read it
         if (this.file.exists() && this.file.length() != 0) {
             // while the buffered reader is still reading in values,
@@ -101,10 +105,9 @@ public class UserInfo {
                         counter++;
                     }
 
-                    
                     // skip one line
                     this.br.readLine();
-                    
+
                 }
 
                 // if the buffered reader reads in no more users,
@@ -115,7 +118,6 @@ public class UserInfo {
                 }
             }
         }
-
     }
 
     // method that writes user data to the text file

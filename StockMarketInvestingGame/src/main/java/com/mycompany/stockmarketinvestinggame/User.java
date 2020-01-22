@@ -78,6 +78,10 @@ public class User {
         this.balance -= decreaseAmount;
     }
     
+    public void increaseBalance(double increaseAmount) {
+        this.balance += increaseAmount;
+    }
+    
     /**
      * sets the account number
      * @param accountNumber 

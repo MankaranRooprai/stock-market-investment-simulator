@@ -11,11 +11,22 @@ package com.mycompany.stockmarketinvestinggame;
  */
 public class HistoricalStockInfo extends javax.swing.JFrame {
 
+    private Login loginScreen;
+    private InvestGame investGame;
+    private User currentUser;
+    
     /**
      * Creates new form HistoricalStockInfo
      */
     public HistoricalStockInfo() {
         initComponents();
+    }
+    
+    public HistoricalStockInfo(Login screen, InvestGame investGame, User currentUser) {
+        initComponents();
+        this.loginScreen = screen;
+        this.investGame = investGame;
+        this.currentUser = currentUser;
     }
 
     /**

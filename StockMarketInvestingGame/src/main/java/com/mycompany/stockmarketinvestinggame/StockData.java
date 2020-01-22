@@ -87,11 +87,11 @@ public class StockData {
         BigDecimal bidPrice;
 
         if ((this.stock = YahooFinance.get(ticker)) != null) {
-            bidPrice = this.stock.getQuote().getAsk();
+            bidPrice = this.stock.getQuote().getBid();
             // set user's balance and add the stock to their stocks arraylist
-            double decreasePrice = bidPrice.doubleValue() * quantity;
+            double increasePrice = bidPrice.doubleValue() * quantity;
             System.out.println(user.getBalance());
-            user.decreaseBalance(decreasePrice);
+            user.increaseBalance(increasePrice);
             System.out.println(user.getBalance());
             for (int i = 0; i < user.stocks.size(); i++) {
                 if (user.stocks.get(i).getTicker().equals(ticker)) {

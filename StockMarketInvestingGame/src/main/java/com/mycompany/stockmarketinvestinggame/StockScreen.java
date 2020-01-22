@@ -5,6 +5,7 @@
  */
 package com.mycompany.stockmarketinvestinggame;
 
+import java.awt.HeadlessException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -254,18 +255,17 @@ public class StockScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_searchFieldActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        this.tickerSymbol = this.searchField.getText();
         try {
-            this.tickerSymbol = this.searchField.getText();
             this.ask = this.investGame.stockData.getStockAsk(this.searchField.getText());
             this.bid = this.investGame.stockData.getStockBid(this.searchField.getText());
-
-            if (ask == null) {
-                JOptionPane.showMessageDialog(null, "Please enter a valid ticker symbol.");
-            } else {
-                this.model.addRow(new Object[]{tickerSymbol, ask, bid});
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid ticker symbol.");
+        }
+        if (ask == null) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid ticker symbol.");
+        } else {
+            this.model.addRow(new Object[]{tickerSymbol, ask, bid});
         }
     }//GEN-LAST:event_searchButtonActionPerformed
 
@@ -280,13 +280,13 @@ public class StockScreen extends javax.swing.JFrame {
         } else {
             // get ticker symbol of selected row 
             String value = this.table.getModel().getValueAt(row, 0).toString();
-            
+
             String username = JOptionPane.showInputDialog("Please enter your username to buy shares of " + value);
             // get password of user 
             String password = JOptionPane.showInputDialog("Please enter your password to buy shares of " + value);
-            
+
             User comparingUser = this.investGame.checkUser(username, password);
-            
+
             // if the user information is correct
             if (comparingUser.getUsername().equals(this.currentUser.getUsername()) && comparingUser.getPassword(password).equals(this.currentUser.getPassword(password))) {
                 System.out.println("here1");
@@ -309,60 +309,64 @@ public class StockScreen extends javax.swing.JFrame {
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Incorrect User Information");
+                JOptionPane.showMessageDialog(null, "Incorrect User Information!");
             }
         }
 
     }//GEN-LAST:event_buyButtonActionPerformed
 
     private void numberOfSharesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numberOfSharesActionPerformed
-        // get selected row 
-        int row = this.positions.getSelectedRow();
-        // get quantity of shares user would like to buy
-        int quantity = Integer.parseInt(this.numberOfShares.getText());
-        
-        if (row == -1 || quantity == 0) {
-            JOptionPane.showMessageDialog(null, "Please select the stock and enter the number of shares you would like to sell.");
-        } else {
-            // get ticker symbol of selected row 
-            String value = this.table.getModel().getValueAt(row, 0).toString();
-            
-            String username = JOptionPane.showInputDialog("Please enter your username to sell shares of " + value);
-            // get password of user 
-            String password = JOptionPane.showInputDialog("Please enter your password to sell shares of " + value);
-            
-            User comparingUser = this.investGame.checkUser(username, password);
-            
-            // if the user information is correct
-            if (comparingUser.getUsername().equals(this.currentUser.getUsername()) && comparingUser.getPassword(password).equals(this.currentUser.getPassword(password))) {
-                System.out.println("here1");
-                // ask user to confirm their order
-                int option = JOptionPane.showConfirmDialog(null, "Would you like to put an order in for " + quantity + " shares of " + value + "?");
-                // if YES is selected, then buy stocks and tell user they have successfully purchased shares
-                if (option == 0) {
-                    try {
-                        System.out.println("Here2");
-                        if (this.investGame.buyStock(this.currentUser, value, quantity)) {
-                            JOptionPane.showMessageDialog(null, "You have successfully purchased " + quantity + " shares of " + value + "!");
-                            ArrayList<Stocks> s = this.currentUser.stocks;
-                            this.positionModel.addRow(new Object[]{s.get(s.size() - 1).getDate(), s.get(s.size() - 1).getTime(), s.get(s.size() - 1).getTicker(), s.get(s.size() - 1).getPurchaseTotal(), s.get(s.size() - 1).getQuantity(), s.get(s.size() - 1).getBuyPrice()});
-                        } else {
-                            JOptionPane.showMessageDialog(null, "No Sufficient Funds");
-                        }
-                    } catch (IOException ex) {
-                        System.out.println("ERROR");
-                        Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Incorrect User Information");
-            }
-        }
-        
+
     }//GEN-LAST:event_numberOfSharesActionPerformed
 
     private void sellButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sellButtonActionPerformed
-        
+        // get selected row 
+        int row = this.positions.getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a row.");
+        } else {
+
+            // get ticker symbol of selected row 
+            String value = this.positions.getModel().getValueAt(row, 2).toString();
+
+            try {
+                // ask user to confirm their order
+                JOptionPane.showMessageDialog(null, "The bid price of this stock is $" + this.investGame.stockData.getStockBid(value));
+
+                int quantity = Integer.parseInt(JOptionPane.showInputDialog("How many shares of " + value + " would you like to sell?"));
+
+                // get username of user
+                String username = JOptionPane.showInputDialog("Please enter your username to sell shares of " + value);
+                // get password of user 
+                String password = JOptionPane.showInputDialog("Please enter your password to sell shares of " + value);
+
+                User comparingUser = this.investGame.checkUser(username, password);
+
+                if (comparingUser.getUsername().equals(this.currentUser.getUsername()) && comparingUser.getPassword(password).equals(this.currentUser.getPassword(password))) {
+                    int option = JOptionPane.showConfirmDialog(null, "Please confirm that you would like to buy " + quantity + " shares of " + value + "?");
+
+                    if (option == 0) {
+                        try {
+                            if (this.investGame.sellStock(this.currentUser, value, quantity)) {
+                                JOptionPane.showMessageDialog(null, "You have successfully sold " + quantity + " shares of " + value + "!");
+                                this.positionModel.removeRow(row);
+                            }
+                        } catch (IOException ex) {
+                            Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect User Information!");
+                }
+
+            } catch (HeadlessException | IOException | NumberFormatException e) {
+                System.out.println("User exited.");
+            }
+
+        }
+
     }//GEN-LAST:event_sellButtonActionPerformed
 
     /**

@@ -109,9 +109,21 @@ public class InvestGame {
         }
     }
 
-    // returns the current user
-    public User getCurrentUser() {
-        return this.currentUser;
+    // method to sell stock
+    public boolean sellStock(User currentUser, String ticker, int quantity) throws IOException {
+        System.out.println("selling");
+        // buy the stock
+        this.stockData.sellStock(ticker, currentUser, quantity);
+        this.userInfo.writeToFile(this.users);
+        System.out.println("sold");
+        
+        return true;
+        
     }
+    
+//    // returns the current user
+//    public User getCurrentUser() {
+//        return this.currentUser;
+//    }
 
 }
