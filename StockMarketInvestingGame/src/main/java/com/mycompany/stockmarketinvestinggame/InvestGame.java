@@ -20,15 +20,17 @@ public class InvestGame {
     UserInfo userInfo;
     // create instance of stock data
     StockData stockData;
-
+    // instance of user
     User currentUser;
-
-    private int accountNumber;
+    
+    // instance variable
+    public double purchaseTotal = 0; 
 
     // constructor 
     public InvestGame() throws IOException {
-        // create new UserInfo
+        // initialize UserInfo
         this.userInfo = new UserInfo(this.users);
+        // initialize stockData
         this.stockData = new StockData();
     }
 
@@ -42,36 +44,29 @@ public class InvestGame {
         this.userInfo.writeToFile(this.users);
     }
 
+    // method to check if a username exists or not that takes in a username 
     public boolean checkUsername(String username) {
+        
+        // boolean to store whether username exists or not 
         boolean existingUsername = false;
 
+        // iterate through the users arraylist, checking if the username exists or not 
         for (int i = 0; i < this.users.size(); i++) {
+            // if the username exists, set boolean to true and break out of for loop
             if (this.users.get(i).getUsername().equals(username)) {
                 existingUsername = true;
                 break;
             }
         }
 
+        // return the boolean
         return existingUsername;
 
     }
 
-    public boolean checkPassword(String password) {
-        boolean existingPassword = false;
-
-        for (int i = 0; i < this.users.size(); i++) {
-            if (this.users.get(i).getPassword(password).equals(password)) {
-                existingPassword = true;
-                break;
-            }
-        }
-
-        return existingPassword;
-    }
-
-    // method to check if accound details are correct
+    // method to check if accound details are correct that takes in a username and password 
     public User checkUser(String username, String password) {
-        // tells us whether or not user exists
+        // boolean stores whether user exists or not
         boolean validUser = false;
         User user = null;
 
@@ -96,34 +91,30 @@ public class InvestGame {
 
     }
 
-    // method to buy stock
+    // method to buy stock that takes in a user, a ticker symbol, and quantity of stocks user would like to buy
     public boolean buyStock(User currentUser, String ticker, int quantity) throws IOException {
-        System.out.println("buying");
-        // buy the stock
+        // buy stock if user can buy stock (sufficient funds)
         if (this.stockData.buyStock(ticker, currentUser, quantity)) {
-            System.out.println("actually buying");
+            // update text file
             this.userInfo.writeToFile(this.users);
             return true;
+        // if user cannot buy stocks, return false
         } else {
             return false;
         }
     }
 
-    // method to sell stock
-    public boolean sellStock(User currentUser, String ticker, int quantity) throws IOException {
-        System.out.println("selling");
-        // buy the stock
-        this.stockData.sellStock(ticker, currentUser, quantity);
+    // method to sell stocks that takes in a user, ticker symbol, and quantity of stocks user would like to buy
+    public int sellStock(User currentUser, String ticker, int quantity, String buyPrice) throws IOException {
+        // store quantity of stocks user has now 
+        int newQuantity = this.stockData.sellStock(ticker, currentUser, quantity, buyPrice);
+        // store new purchase total
+        this.purchaseTotal = currentUser.stocks.get(this.stockData.counter).getPurchaseTotal();
+        // update text file
         this.userInfo.writeToFile(this.users);
-        System.out.println("sold");
         
-        return true;
-        
+        // return the new quantity of stocks 
+        return newQuantity;
     }
     
-//    // returns the current user
-//    public User getCurrentUser() {
-//        return this.currentUser;
-//    }
-
 }

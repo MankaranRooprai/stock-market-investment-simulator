@@ -5,6 +5,7 @@
  */
 package com.mycompany.stockmarketinvestinggame;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +19,7 @@ public class User {
     private String password;
     private double balance;
     private int accountNumber;
+    DecimalFormat df = new DecimalFormat("#.##");
     ArrayList<Stocks> stocks = new ArrayList<>();
     
     // constructor 
@@ -49,17 +51,12 @@ public class User {
         }
     }
     
+    /**
+     * only used for writing to textfile
+     * @return password
+     */
     public String getPass() {
         return this.password;
-    }
-    
-    /**
-     * sets a new password for user
-     * @param newPassword
-     * @return new password of user
-     */
-    public String setPassword(String newPassword) {
-        return this.password = newPassword;
     }
     
     /**
@@ -67,27 +64,23 @@ public class User {
      * @return balance
      */
     public double getBalance() {
-        return this.balance;
+        return Double.parseDouble(this.df.format(this.balance));
     }
     
     /**
-     * decreases the balance
+     * decreases the balance and rounds to two decimal places
      * @param decreaseAmount value to decrease balance by
      */
     public void decreaseBalance(double decreaseAmount) {
-        this.balance -= decreaseAmount;
-    }
-    
-    public void increaseBalance(double increaseAmount) {
-        this.balance += increaseAmount;
+        this.df.format(this.balance -= decreaseAmount);
     }
     
     /**
-     * sets the account number
-     * @param accountNumber 
+     * increases the balance and rounds to two decimal places
+     * @param increaseAmount value to increase balance by
      */
-    public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
+    public void increaseBalance(double increaseAmount) {
+        this.df.format(this.balance += increaseAmount);
     }
     
     /**
@@ -96,6 +89,14 @@ public class User {
      */
     public int getAccountNumber() {
         return this.accountNumber;
+    }
+    
+    /**
+     * sets the account number
+     * @param accountNumber 
+     */
+    public void setAccountNumber(int accountNumber) {
+        this.accountNumber = accountNumber;
     }
     
 }

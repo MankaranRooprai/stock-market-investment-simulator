@@ -5,28 +5,51 @@
  */
 package com.mycompany.stockmarketinvestinggame;
 
+import java.io.IOException;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Mankaran
  */
 public class HistoricalStockInfo extends javax.swing.JFrame {
 
-    private Login loginScreen;
+    // instance variables
     private InvestGame investGame;
-    private User currentUser;
-    
+    private String ticker;
+
     /**
      * Creates new form HistoricalStockInfo
      */
+    // contructor
     public HistoricalStockInfo() {
         initComponents();
     }
-    
-    public HistoricalStockInfo(Login screen, InvestGame investGame, User currentUser) {
+
+    // constructor
+    public HistoricalStockInfo(InvestGame investGame, String ticker) throws IOException {
         initComponents();
-        this.loginScreen = screen;
+        // initialize instance variables
+        this.setResizable(false);
         this.investGame = investGame;
-        this.currentUser = currentUser;
+        this.ticker = ticker;
+
+        // store stock history in a list
+        List history = this.investGame.stockData.getHistory(ticker);
+        
+        DefaultTableModel historicalDataModel;
+        
+        historicalDataModel = (DefaultTableModel) this.historicalData.getModel();
+        
+        // iterate through the list and display the information, each time adding a new row
+        for (int i = 0; i < history.size(); i++) {
+            String symbolDate = history.get(i).toString().substring(0, 15);
+            String lowHigh = history.get(i).toString().substring(17, 37);
+            String openClose = history.get(i).toString().substring(40, 61);
+            String adjusted = history.get(i).toString().substring(63, history.get(i).toString().length());
+            historicalDataModel.addRow(new Object[]{symbolDate, "$" + lowHigh, "$" + openClose, "$" + adjusted});
+        }
     }
 
     /**
@@ -41,18 +64,16 @@ public class HistoricalStockInfo extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         historicalData = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         historicalData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Ticker Symbol", "Date", "Low", "High", "Open", "Close", "Adjusted Close"
+                "Symbol@Date", "Low-High", "Open->Close", "Adjusted Close"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -66,26 +87,17 @@ public class HistoricalStockInfo extends javax.swing.JFrame {
             historicalData.getColumnModel().getColumn(1).setResizable(false);
             historicalData.getColumnModel().getColumn(2).setResizable(false);
             historicalData.getColumnModel().getColumn(3).setResizable(false);
-            historicalData.getColumnModel().getColumn(4).setResizable(false);
-            historicalData.getColumnModel().getColumn(5).setResizable(false);
-            historicalData.getColumnModel().getColumn(6).setResizable(false);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
         );
 
         pack();

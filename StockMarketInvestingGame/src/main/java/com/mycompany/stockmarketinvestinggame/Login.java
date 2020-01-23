@@ -21,6 +21,7 @@ public class Login extends javax.swing.JFrame {
     private InvestGame investGame = new InvestGame();
     private User user;
     
+    // store user data
     private String userName;
     private String passWord;
     private double balance;
@@ -31,6 +32,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() throws IOException {
         initComponents();
+        // initialize invest game
         this.investGame = new InvestGame();
         // make some components not visible upon startup
         this.setResizable(false);
@@ -44,12 +46,14 @@ public class Login extends javax.swing.JFrame {
         this.getContentPane().setBackground(Color.black);
     }
 
+    // method to show visibility of components
     public void balance() {
         this.fiftyThousand.setVisible(true);
         this.twentyThousand.setVisible(true);
         this.hundredThousand.setVisible(true);
     }
 
+    // method to show visibility of components
     public void enter() {
         this.enter.setVisible(false);
         this.newUsername.setVisible(false);
@@ -57,8 +61,11 @@ public class Login extends javax.swing.JFrame {
         this.twentyThousand.setVisible(true);
         this.fiftyThousand.setVisible(true);
         this.hundredThousand.setVisible(true);
+        // change text
+        this.loginText.setText("Please select a balance to start your account with.");
     }
 
+   // method to show visibility of components
     public void login() throws IOException {
         this.username.setVisible(false);
         this.password.setVisible(false);
@@ -66,10 +73,12 @@ public class Login extends javax.swing.JFrame {
         this.signup.setVisible(false);
         this.or.setVisible(false);
         this.setVisible(false);
+        // create a new stock screen and show it 
         StockScreen stockScreen = new StockScreen(this, this.investGame, this.user);
         stockScreen.setVisible(true);
     }
     
+    // method to show visibility of components
     public void signUp() {
         this.or.setVisible(false);
         this.signup.setVisible(false);
@@ -79,10 +88,13 @@ public class Login extends javax.swing.JFrame {
         this.newUsername.setVisible(true);
         this.newPassword.setVisible(true);
         this.enter.setVisible(true);
+        // change text
         this.loginText.setText("Please enter a username and password.");
     }
     
+    // method to add a new user to the arraylist in investgame
     public void newUser(double balance) {
+        // catch errors if there are any 
         try {
             this.investGame.addUser(this.userName, this.passWord, balance);
             this.user = new User(this.userName, this.passWord, balance);
@@ -277,7 +289,7 @@ public class Login extends javax.swing.JFrame {
     private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordActionPerformed
-
+   
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         
         // set instance variables equal to username and password entered by player
@@ -310,14 +322,17 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_newUsernameActionPerformed
 
     private void enterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterActionPerformed
-        // store new username
+        // store new username and password
         this.userName = this.newUsername.getText();
         this.passWord = this.newPassword.getText();
         
+        // check to see if nothing is enterd in textfields
         if (this.userName.equals("") || this.passWord.equals("")) {
             JOptionPane.showMessageDialog(null, "Please enter information.");
+        // otherwise, check to see if username already exists
         } else if (this.investGame.checkUsername(this.userName)) {
             JOptionPane.showMessageDialog(null, "This username already exists. Please choose another one.");
+        // if no user exists, show next screen
         } else {
             enter();
         }
