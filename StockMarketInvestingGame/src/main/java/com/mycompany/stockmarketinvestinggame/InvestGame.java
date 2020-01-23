@@ -105,9 +105,9 @@ public class InvestGame {
     }
 
     // method to sell stocks that takes in a user, ticker symbol, and quantity of stocks user would like to buy
-    public int sellStock(User currentUser, String ticker, int quantity, String buyPrice) throws IOException {
+    public int sellStock(User currentUser, String ticker, int quantity, String time) throws IOException {
         // store quantity of stocks user has now 
-        int newQuantity = this.stockData.sellStock(ticker, currentUser, quantity, buyPrice);
+        int newQuantity = this.stockData.sellStock(ticker, currentUser, quantity, time);
         // store new purchase total
         this.purchaseTotal = currentUser.stocks.get(this.stockData.counter).getPurchaseTotal();
         // update text file

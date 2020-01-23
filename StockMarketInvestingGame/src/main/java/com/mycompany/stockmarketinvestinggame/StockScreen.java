@@ -117,6 +117,7 @@ public class StockScreen extends javax.swing.JFrame {
         numberOfShares = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         currentBalanceSearch = new javax.swing.JLabel();
+        searchTicker = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -163,26 +164,26 @@ public class StockScreen extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(sellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(252, 252, 252))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(currentBalancePositions, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(93, 93, 93))))
+                .addGap(115, 115, 115)
+                .addComponent(currentBalancePositions, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(34, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(257, 257, 257)
+                .addComponent(sellButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(38, 38, 38)
                 .addComponent(currentBalancePositions, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addGap(39, 39, 39)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
+                .addGap(47, 47, 47)
                 .addComponent(sellButton)
                 .addContainerGap(64, Short.MAX_VALUE))
         );
@@ -247,17 +248,29 @@ public class StockScreen extends javax.swing.JFrame {
 
         currentBalanceSearch.setText("CURRENT BALANCE:");
 
+        searchTicker.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        searchTicker.setText("Search for a ticker symbol below");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(115, 115, 115))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(currentBalanceSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(164, 164, 164))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -266,23 +279,23 @@ public class StockScreen extends javax.swing.JFrame {
                                     .addComponent(numberOfShares, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(buyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(82, 82, 82)
-                                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(234, 234, 234)
-                                .addComponent(searchButton))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(148, 148, 148)
-                                .addComponent(currentBalanceSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(264, 264, 264)
+                                .addComponent(searchButton)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 39, Short.MAX_VALUE)
+                .addComponent(searchTicker, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap()
                 .addComponent(currentBalanceSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchTicker)
+                .addGap(7, 7, 7)
                 .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(searchButton)
@@ -431,6 +444,7 @@ public class StockScreen extends javax.swing.JFrame {
                 String value = this.positions.getModel().getValueAt(row, 2).toString();
                 // tell user bid price of stock they wish to sell
                 JOptionPane.showMessageDialog(null, "The bid price of this stock is $" + this.investGame.stockData.getStockBid(value) + ".");
+                System.out.println(this.investGame.stockData.getStockBid(value));
                 // ask user how many of their shares they would like to sell
                 int quantity = Integer.parseInt(JOptionPane.showInputDialog("How many shares of " + value + " would you like to sell? (Note that entering an integer higher than the amount of stocks that you own will sell all stocks of that position)"));
                 // get username of user
@@ -458,7 +472,7 @@ public class StockScreen extends javax.swing.JFrame {
                             if (option == JOptionPane.YES_OPTION) {
 
                                 // sell the stock and store the quantity of stocks left in the position
-                                int positionQuantity = this.investGame.sellStock(currentUser, value, quantity, this.positions.getModel().getValueAt(row, 5).toString());
+                                int positionQuantity = this.investGame.sellStock(currentUser, value, quantity, this.positions.getModel().getValueAt(row, 1).toString());
 
                                 // if no stocks are left in the position, remove that row
                                 if (positionQuantity == 0) {
@@ -472,6 +486,19 @@ public class StockScreen extends javax.swing.JFrame {
                                     this.positionModel.setValueAt("$" + this.investGame.purchaseTotal, row, 3);
                                     JOptionPane.showMessageDialog(null, "You have successfully sold " + quantity + " shares of " + value + "!");
                                 }
+                                
+                                // calculate the difference of the stocks that the user initially bought and price of the stocks they just sold
+                                double difference = Double.parseDouble(this.df.format(this.investGame.stockData.newPurchaseTotal - this.investGame.stockData.oldPurchaseTotal));
+                                
+                                // check if the user had made or lost money, or breaks even
+                                if (difference > 0) {
+                                    JOptionPane.showMessageDialog(null, "You have made $" + difference + ".");
+                                } else if (difference < 0) {
+                                    JOptionPane.showMessageDialog(null, "You have lost $" + difference + ".");
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "You have broke even.");
+                                }        
+                                
                             // user has exited 
                             } else {
                                 System.out.println("User exited.");
@@ -488,7 +515,7 @@ public class StockScreen extends javax.swing.JFrame {
             }
         // catch any exception errors
         } catch (HeadlessException | IOException | NumberFormatException e) {
-            System.out.println("Error");
+            JOptionPane.showMessageDialog(null, "Please enter an integer value.");
         }
 
     }//GEN-LAST:event_sellButtonActionPerformed
@@ -557,6 +584,7 @@ public class StockScreen extends javax.swing.JFrame {
     private javax.swing.JTable positions;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
+    private javax.swing.JLabel searchTicker;
     private javax.swing.JButton sellButton;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables

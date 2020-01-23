@@ -22,6 +22,8 @@ public class StockData {
     Stock stock;
     public int counter = 0;
     DecimalFormat df = new DecimalFormat("#.##");
+    public double newPurchaseTotal;
+    public double oldPurchaseTotal;
 
     // contructor
     public StockData() {
@@ -160,7 +162,7 @@ public class StockData {
     }
 
     // method to sell stocks that takes in a ticker, user, and quantity of stocks that the user would like to sell
-    public int sellStock(String ticker, User user, int quantity, String buyPrice) throws IOException {
+    public int sellStock(String ticker, User user, int quantity, String time) throws IOException {
 
         // variable to store quantity of stocks user has left after selling
         int newQuantity = 0;
@@ -175,16 +177,18 @@ public class StockData {
             for (int i = 0; i < user.stocks.size(); i++) {
 
                 // check if any of the stocks are equal to the ticker symbol entered by the user and the buyPrice, since the user could have multiple positions with the same ticker symbol
-                if (user.stocks.get(i).getTicker().equals(ticker) && user.stocks.get(i).getBuyPrice() == Double.parseDouble(buyPrice)) {
+                if (user.stocks.get(i).getTime().equals(time)) {
 
                     // check to see if the user has more stocks than the user would like to sell
                     if (user.stocks.get(i).getQuantity() >= quantity) {
 
+                        this.oldPurchaseTotal = Double.parseDouble(this.df.format(user.stocks.get(i).getBuyPrice() * quantity));
+                        
                         // calculate the amount to add to the user's balance
-                        double increasePrice = Double.parseDouble(this.df.format(Double.parseDouble(bidPrice) * quantity));
+                        this.newPurchaseTotal = Double.parseDouble(this.df.format(Double.parseDouble(bidPrice) * quantity));
 
                         // increase the user's balance
-                        user.increaseBalance(increasePrice);
+                        user.increaseBalance(this.newPurchaseTotal);
 
                         // set the quantity of stocks of the user
                         user.stocks.get(i).setQuantity(user.stocks.get(i).getQuantity() - quantity);
@@ -208,12 +212,19 @@ public class StockData {
                         break;
                      // if the user has less stocks in quantity than the amount they've entered to sell, 
                     } else {
+                        
+                        // store old purchase total
+                        this.oldPurchaseTotal = Double.parseDouble(this.df.format(user.stocks.get(i).getBuyPrice() * user.stocks.get(i).getQuantity()));
+                        
                         // then calculate the amount to add to the user's balance (all of the stocks in this position will be sold)
-                        double increasePrice = Double.parseDouble(this.df.format(Double.parseDouble(bidPrice) * user.stocks.get(i).getQuantity()));
+                        this.newPurchaseTotal = Double.parseDouble(this.df.format(Double.parseDouble(bidPrice) * user.stocks.get(i).getQuantity()));
 
                         // increase the user's balance
-                        user.increaseBalance(increasePrice);
+                        user.increaseBalance(this.newPurchaseTotal);
 
+                        // set the new purchase total with the remaining stocks
+                        user.stocks.get(i).setPurchaseTotal(user.stocks.get(i).getBuyPrice() * quantity);
+                        
                         // set newQuantity equal to zero and store the stock's index in counter
                         newQuantity = 0;
                         this.counter = i;
