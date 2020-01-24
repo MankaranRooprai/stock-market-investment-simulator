@@ -19,11 +19,13 @@ import yahoofinance.YahooFinance;
 public class StockData {
 
     // instance variables
-    Stock stock;
-    public int counter = 0;
-    DecimalFormat df = new DecimalFormat("#.##");
-    public double newPurchaseTotal;
-    public double oldPurchaseTotal;
+    private Stock stock;
+    private DecimalFormat df = new DecimalFormat("#.##");
+    
+    // instance variables that are set in InvestGame
+    int counter = 0;
+    double newPurchaseTotal;
+    double oldPurchaseTotal;
 
     // contructor
     public StockData() {
@@ -31,7 +33,7 @@ public class StockData {
     }
 
     // method to get stock history takes in a ticker symbol
-    public List getHistory(String ticker) throws IOException {
+    public List stockHistory(String ticker) throws IOException {
         // get stock
         this.stock = YahooFinance.get(ticker);
 
@@ -40,7 +42,7 @@ public class StockData {
     }
 
     // method to get asking price for a stock and takes in a ticker symbol 
-    public String getStockAsk(String ticker) throws IOException {
+    public String stockAskPrice(String ticker) throws IOException {
 
         // variable to store stock asking price
         BigDecimal askPrice;
@@ -50,7 +52,7 @@ public class StockData {
             // if the stock exists, get the asking price
             askPrice = this.stock.getQuote().getAsk();
             //return the asking price
-            return askPrice.toString();
+            return this.df.format(askPrice);
             // otherwise return null
         } else {
             return null;
@@ -58,7 +60,7 @@ public class StockData {
     }
 
     // method to get bid price for a stock and takes in a ticker symbol 
-    public String getStockBid(String ticker) throws IOException {
+    public String stockBidPrice(String ticker) throws IOException {
 
         // variable to store stock bidding price
         BigDecimal bidPrice;
@@ -67,7 +69,7 @@ public class StockData {
         if ((this.stock = YahooFinance.get(ticker)) != null) {
             // if the stock exists, get the bidding price and return it
             bidPrice = this.stock.getQuote().getBid();
-            return bidPrice.toString();
+            return this.df.format(bidPrice);
             // otherwise return null
         } else {
             return null;
@@ -75,7 +77,7 @@ public class StockData {
     }
 
     // method to get stock high price for the day of a stock, and takes in a ticker symbol 
-    public String getStockHigh(String ticker) throws IOException {
+    public String stockDayHigh(String ticker) throws IOException {
 
         // variable to store stock day high price
         BigDecimal dayHigh;
@@ -84,7 +86,7 @@ public class StockData {
         if ((this.stock = YahooFinance.get(ticker)) != null) {
             // if the stock exists, get the day high price and return it
             dayHigh = this.stock.getQuote().getDayHigh();
-            return dayHigh.toString();
+            return this.df.format(dayHigh);
             // otherwise return null
         } else {
             return null;
@@ -92,7 +94,7 @@ public class StockData {
     }
 
     // method to get stock high price for the day of a stock, and takes in a ticker symbol 
-    public String getStockLow(String ticker) throws IOException {
+    public String stockDayLow(String ticker) throws IOException {
 
         // variable to store stock day low price
         BigDecimal dayLow;
@@ -101,7 +103,7 @@ public class StockData {
         if ((this.stock = YahooFinance.get(ticker)) != null) {
             // if the stock exists, get the day low price and return it
             dayLow = this.stock.getQuote().getDayLow();
-            return dayLow.toString();
+            return this.df.format(dayLow);
             // otherwise return null
         } else {
             return null;
@@ -109,7 +111,7 @@ public class StockData {
     }
 
     // method to get stock volume of a stock, and takes in a ticker symbol 
-    public long getStockVolume(String ticker) throws IOException {
+    public long stockVolume(String ticker) throws IOException {
 
         // variable to store stock volume
         long volume;
@@ -132,7 +134,7 @@ public class StockData {
         boolean canBuy = false;
 
         // asking price of stock
-        String askPrice = this.getStockAsk(ticker);
+        String askPrice = this.stockAskPrice(ticker);
 
         // if there is an asking price, 
         if (askPrice != null) {
@@ -168,7 +170,7 @@ public class StockData {
         int newQuantity = 0;
 
         // store bidding price of stock
-        String bidPrice = this.getStockBid(ticker);
+        String bidPrice = this.stockBidPrice(ticker);
 
         // check if the stock exists, 
         if (bidPrice != null) {
@@ -182,6 +184,7 @@ public class StockData {
                     // check to see if the user has more stocks than the user would like to sell
                     if (user.stocks.get(i).getQuantity() >= quantity) {
 
+                        // store the old purchase total which is the stocks user wants to sell mutliplied by the initial buy price
                         this.oldPurchaseTotal = Double.parseDouble(this.df.format(user.stocks.get(i).getBuyPrice() * quantity));
                         
                         // calculate the amount to add to the user's balance

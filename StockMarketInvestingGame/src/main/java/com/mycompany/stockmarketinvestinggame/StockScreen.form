@@ -353,7 +353,7 @@
             <Component class="javax.swing.JLabel" name="searchTicker">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Search for a ticker symbol below"/>
+                <Property name="text" type="java.lang.String" value="Search for a ticker symbol below and double click on a row to retrieve historical information."/>
               </Properties>
             </Component>
           </SubComponents>

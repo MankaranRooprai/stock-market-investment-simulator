@@ -196,9 +196,6 @@ public class UserInfo {
                 this.writer.flush();
             }
         }
-
-        // close the writer
-        this.writer.close();
         
     }
 

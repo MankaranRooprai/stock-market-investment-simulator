@@ -19,7 +19,7 @@ public class User {
     private String password;
     private double balance;
     private int accountNumber;
-    DecimalFormat df = new DecimalFormat("#.##");
+    private DecimalFormat df = new DecimalFormat("#.##");
     ArrayList<Stocks> stocks = new ArrayList<>();
     
     // constructor 
@@ -47,7 +47,7 @@ public class User {
         if (this.password.equals(password)) {
             return this.password;
         } else {
-            return "";
+            return null;
         }
     }
     

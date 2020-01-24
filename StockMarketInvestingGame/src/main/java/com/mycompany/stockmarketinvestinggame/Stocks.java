@@ -20,7 +20,7 @@ public class Stocks {
     private double buyPrice;
     private int quantity;
     private double purchaseTotal;
-    DecimalFormat df = new DecimalFormat("#.##");
+    private DecimalFormat df = new DecimalFormat("#.##");
     
     // contructor
     public Stocks(String date, String time, String ticker, double buyPrice, int quantity, double purchaseTotal) {

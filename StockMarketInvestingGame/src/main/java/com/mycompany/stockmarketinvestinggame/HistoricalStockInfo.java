@@ -36,7 +36,7 @@ public class HistoricalStockInfo extends javax.swing.JFrame {
         this.ticker = ticker;
 
         // store stock history in a list
-        List history = this.investGame.stockData.getHistory(ticker);
+        List history = this.investGame.getHistory(ticker);
         
         DefaultTableModel historicalDataModel;
         

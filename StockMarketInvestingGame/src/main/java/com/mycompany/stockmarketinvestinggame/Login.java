@@ -334,7 +334,7 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "This username already exists. Please choose another one.");
         // if no user exists, show next screen
         } else {
-            enter();
+            this.enter();
         }
         
     }//GEN-LAST:event_enterActionPerformed
@@ -344,7 +344,7 @@ public class Login extends javax.swing.JFrame {
         this.balance = 20000.0;
         
         // create a new user
-        newUser(this.balance);
+        this.newUser(this.balance);
         
     }//GEN-LAST:event_twentyThousandActionPerformed
 
@@ -353,7 +353,7 @@ public class Login extends javax.swing.JFrame {
         this.balance = 50000.0;
         
         // create a new user
-        newUser(this.balance);
+        this.newUser(this.balance);
         
     }//GEN-LAST:event_fiftyThousandActionPerformed
 
@@ -362,7 +362,7 @@ public class Login extends javax.swing.JFrame {
         this.balance = 100000.0;
         
         // create a new user
-        newUser(this.balance);
+        this.newUser(this.balance);
         
     }//GEN-LAST:event_hundredThousandActionPerformed
 

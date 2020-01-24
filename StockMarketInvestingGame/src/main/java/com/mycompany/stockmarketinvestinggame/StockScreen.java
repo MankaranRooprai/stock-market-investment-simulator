@@ -36,7 +36,7 @@ public class StockScreen extends javax.swing.JFrame {
     private String dayHigh;
     private String dayLow;
     private long volume;
-    DecimalFormat df = new DecimalFormat("#.##");
+    private DecimalFormat df = new DecimalFormat("#.##");
 
     // constructor 
     public StockScreen() throws IOException {
@@ -249,7 +249,7 @@ public class StockScreen extends javax.swing.JFrame {
         currentBalanceSearch.setText("CURRENT BALANCE:");
 
         searchTicker.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        searchTicker.setText("Search for a ticker symbol below");
+        searchTicker.setText("Search for a ticker symbol below and double click on a row to retrieve historical information.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -335,11 +335,11 @@ public class StockScreen extends javax.swing.JFrame {
 
         try {
             // get values of stock entered
-            this.ask = this.investGame.stockData.getStockAsk(this.searchField.getText());
-            this.bid = this.investGame.stockData.getStockBid(this.searchField.getText());
-            this.dayHigh = this.investGame.stockData.getStockHigh(this.searchField.getText());
-            this.dayLow = this.investGame.stockData.getStockLow(this.searchField.getText());
-            this.volume = this.investGame.stockData.getStockVolume(this.searchField.getText());
+            this.bid = this.investGame.getStockBid(this.searchField.getText());
+            this.ask = this.investGame.getStockAsk(this.searchField.getText());
+            this.dayHigh = this.investGame.getStockDayHigh(this.searchField.getText());
+            this.dayLow = this.investGame.getStockDayLow(this.searchField.getText());
+            this.volume = this.investGame.getStockVolume(this.searchField.getText());
         // if a user has entered a ticker symbol that does not exist, ask them to enter one that does
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Please enter a valid ticker symbol.");
@@ -350,7 +350,7 @@ public class StockScreen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter a valid ticker symbol.");
         // otherwise, add a row to the table containing the stock's information
         } else {
-            this.model.addRow(new Object[]{this.tickerSymbol.toUpperCase(), "$" + this.ask, "$" + this.bid, "$" + this.dayHigh, "$" + this.dayLow, this.volume});
+            this.model.addRow(new Object[]{this.tickerSymbol.toUpperCase(), "$" + this.bid, "$" + this.ask, "$" + this.dayHigh, "$" + this.dayLow, this.volume});
         }
     }//GEN-LAST:event_searchButtonActionPerformed
 
@@ -390,7 +390,7 @@ public class StockScreen extends javax.swing.JFrame {
                             // otherwise, see if the user that's logged in equals the user that is being compared
                         } else if (comparingUser.getUsername().equals(this.currentUser.getUsername()) && comparingUser.getPassword(password).equals(this.currentUser.getPassword(password))) {
                             // ask user to confirm their order
-                            int option = JOptionPane.showConfirmDialog(null, "Would you like to put an order in for " + quantity + " shares of " + value + " coming to a total value of $" + this.df.format(Double.parseDouble(this.investGame.stockData.getStockAsk(value)) * quantity) + "?");
+                            int option = JOptionPane.showConfirmDialog(null, "Would you like to put an order in for " + quantity + " shares of " + value + " coming to a total value of $" + this.df.format(Double.parseDouble(this.investGame.getStockAsk(value)) * quantity) + "?");
                             // if YES is selected, then buy stocks and tell user they have successfully purchased shares
                             if (option == JOptionPane.YES_OPTION) {
                                 // check to see if buyStock is true
@@ -400,7 +400,7 @@ public class StockScreen extends javax.swing.JFrame {
                                     this.setUserBalance();
                                     // add a row containing the user's newest stock
                                     ArrayList<Stocks> s = this.currentUser.stocks;
-                                    this.positionModel.addRow(new Object[]{s.get(s.size() - 1).getDate(), s.get(s.size() - 1).getTime(), s.get(s.size() - 1).getTicker(), s.get(s.size() - 1).getPurchaseTotal(), s.get(s.size() - 1).getQuantity(), s.get(s.size() - 1).getBuyPrice()});
+                                    this.positionModel.addRow(new Object[]{s.get(s.size() - 1).getDate(), s.get(s.size() - 1).getTime(), s.get(s.size() - 1).getTicker(), "$" + s.get(s.size() - 1).getPurchaseTotal(), s.get(s.size() - 1).getQuantity(), "$" + s.get(s.size() - 1).getBuyPrice()});
                                 // otherwise, user does not have sufficient funds and cannot buy stocks
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Not Sufficient Funds.");
@@ -409,6 +409,9 @@ public class StockScreen extends javax.swing.JFrame {
                             } else {
                                 System.out.println("User exited.");
                             }
+                        // tell user wrong user information is entered
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Incorrect User Information!");
                         }
                     // if wrong password is entered, tell user
                     } else {
@@ -438,13 +441,17 @@ public class StockScreen extends javax.swing.JFrame {
 
             // if no row is selected, tell user
             if (row == -1) {
-                JOptionPane.showMessageDialog(null, "Please select a row.");
+                if (this.positions.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(null, "You have no positions.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please select a row.");
+                }
             } else {
                 // get ticker symbol of selected row
                 String value = this.positions.getModel().getValueAt(row, 2).toString();
                 // tell user bid price of stock they wish to sell
-                JOptionPane.showMessageDialog(null, "The bid price of this stock is $" + this.investGame.stockData.getStockBid(value) + ".");
-                System.out.println(this.investGame.stockData.getStockBid(value));
+                JOptionPane.showMessageDialog(null, "The bid price of this stock is $" + this.investGame.getStockBid(value) + ".");
+                System.out.println(this.investGame.getStockBid(value));
                 // ask user how many of their shares they would like to sell
                 int quantity = Integer.parseInt(JOptionPane.showInputDialog("How many shares of " + value + " would you like to sell? (Note that entering an integer higher than the amount of stocks that you own will sell all stocks of that position)"));
                 // get username of user
@@ -465,12 +472,22 @@ public class StockScreen extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Incorrect User Information!");
                         // if the logged in user equals the information they've entered, then continue on
                         } else if (comparingUser.getUsername().equals(this.currentUser.getUsername()) && comparingUser.getPassword(password).equals(this.currentUser.getPassword(password))) {
+                            
+                            int option;
+                            
                             // ask user to confirm their sell order
-                            int option = JOptionPane.showConfirmDialog(null, "Please confirm that you would like to sell " + quantity + " shares of " + value + " coming to a total value of $" + this.df.format(Double.parseDouble(this.investGame.stockData.getStockAsk(value)) * quantity) + "?");
+                            // check if the quantity of shares the user wants to sell is less than what they own
+                            if (Integer.parseInt(this.positions.getModel().getValueAt(row, 4).toString()) > quantity) {
+                                // ask usser to sell x amount of shares
+                                option = JOptionPane.showConfirmDialog(null, "Please confirm that you would like to sell " + quantity + " shares of " + value + " coming to a total value of $" + this.df.format(Double.parseDouble(this.investGame.getStockBid(value)) * quantity) + "?");
+                            // otherwise, ask user if they want to sell all their shares
+                            } else {
+                                option = JOptionPane.showConfirmDialog(null, "Please confirm that you would like to sell all shares of " + value + " coming to a total value of $" + this.df.format(Double.parseDouble(this.investGame.getStockBid(value)) * Integer.parseInt(this.positions.getModel().getValueAt(row, 4).toString())) + "?");
+                            }
+                            
 
                             // check to see if user wishes to sell
                             if (option == JOptionPane.YES_OPTION) {
-
                                 // sell the stock and store the quantity of stocks left in the position
                                 int positionQuantity = this.investGame.sellStock(currentUser, value, quantity, this.positions.getModel().getValueAt(row, 1).toString());
 
@@ -483,12 +500,12 @@ public class StockScreen extends javax.swing.JFrame {
                                 } else {
                                     this.setUserBalance();
                                     this.positionModel.setValueAt(positionQuantity, row, 4);
-                                    this.positionModel.setValueAt("$" + this.investGame.purchaseTotal, row, 3);
+                                    this.positionModel.setValueAt("$" + this.investGame.purchase, row, 3);
                                     JOptionPane.showMessageDialog(null, "You have successfully sold " + quantity + " shares of " + value + "!");
                                 }
                                 
                                 // calculate the difference of the stocks that the user initially bought and price of the stocks they just sold
-                                double difference = Double.parseDouble(this.df.format(this.investGame.stockData.newPurchaseTotal - this.investGame.stockData.oldPurchaseTotal));
+                                double difference = Double.parseDouble(this.df.format(this.investGame.newPurchaseTotal - this.investGame.oldPurchaseTotal));
                                 
                                 // check if the user had made or lost money, or breaks even
                                 if (difference > 0) {
@@ -503,7 +520,9 @@ public class StockScreen extends javax.swing.JFrame {
                             } else {
                                 System.out.println("User exited.");
                             }
-
+                        // user has entered incorrect information
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Incorrect User Information!");
                         }
                     // user has entered incorrect information
                     } else {
@@ -514,7 +533,9 @@ public class StockScreen extends javax.swing.JFrame {
 
             }
         // catch any exception errors
-        } catch (HeadlessException | IOException | NumberFormatException e) {
+        } catch (HeadlessException he) {
+            Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, he);
+        } catch (NumberFormatException | IOException nfe) {
             JOptionPane.showMessageDialog(null, "Please enter an integer value.");
         }
 
