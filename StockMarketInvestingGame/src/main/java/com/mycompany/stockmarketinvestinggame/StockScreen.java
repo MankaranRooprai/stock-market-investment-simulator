@@ -362,8 +362,8 @@ public class StockScreen extends javax.swing.JFrame {
             // get quantity of shares user would like to buy
             int quantity = Integer.parseInt(this.numberOfShares.getText());
 
-            // if no row is selected or the quantity entered is 0, then ask user to select a row and enter number of shares they'd like to purchase
-            if (row == -1 || quantity == 0) {
+            // if no row is selected or the quantity entered is 0 or less than 0, then ask user to select a row and enter number of shares they'd like to purchase
+            if (row == -1 || quantity <= 0) {
                 JOptionPane.showMessageDialog(null, "Please select the stock and enter the number of shares you would like to purchase.");
             } else {
                 // get ticker symbol of selected row
@@ -421,7 +421,7 @@ public class StockScreen extends javax.swing.JFrame {
             }
         // catch an exception if either a row hasn't been selected or an integer value isn't entered 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please select a stock and enter an integer value.");
+            JOptionPane.showMessageDialog(null, "Please select a stock and enter a positive integer value.");
         // catch an input/output exception
         } catch (IOException ex) {
             Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -454,6 +454,16 @@ public class StockScreen extends javax.swing.JFrame {
                 System.out.println(this.investGame.getStockBid(value));
                 // ask user how many of their shares they would like to sell
                 int quantity = Integer.parseInt(JOptionPane.showInputDialog("How many shares of " + value + " would you like to sell? (Note that entering an integer higher than the amount of stocks that you own will sell all stocks of that position)"));
+                
+                // while the quantity entered is 0 or less than zero, tell user to enter a positive integer value greater than 0
+                while (quantity <= 0) {
+                    JOptionPane.showMessageDialog(null, "Please enter a positive integer value greater than 0.");
+                    quantity = Integer.parseInt(JOptionPane.showInputDialog("How many shares of " + value + " would you like to sell? (Note that entering an integer higher than the amount of stocks that you own will sell all stocks of that position)"));
+                    if (quantity == JOptionPane.CANCEL_OPTION || quantity == JOptionPane.NO_OPTION) {
+                        break;
+                    }
+                }
+                
                 // get username of user
                 String username = JOptionPane.showInputDialog("Please enter your username to sell shares of " + value);
 
@@ -536,7 +546,7 @@ public class StockScreen extends javax.swing.JFrame {
         } catch (HeadlessException he) {
             Logger.getLogger(StockScreen.class.getName()).log(Level.SEVERE, null, he);
         } catch (NumberFormatException | IOException nfe) {
-            JOptionPane.showMessageDialog(null, "Please enter an integer value.");
+            JOptionPane.showMessageDialog(null, "No integer value entered.");
         }
 
     }//GEN-LAST:event_sellButtonActionPerformed
