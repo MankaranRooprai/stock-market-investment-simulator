@@ -2,7 +2,7 @@
 
 This project is a stock market investment simulator built with Java Swing for the graphical user interface (GUI). It allows users to simulate buying and selling stocks using live data fetched from the Yahoo Finance API.
 
-## Screenshots
+## User Interface
 
 ### Login screen
 ![image](https://github.com/MankaranRooprai/stock-market-investment-simulator/assets/13322471/afb5452f-f727-4746-a645-8f8ae07f5391)
