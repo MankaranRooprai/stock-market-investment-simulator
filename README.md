@@ -4,29 +4,20 @@ This project is a stock market investment simulator built with Java Swing for th
 
 ## Screenshots
 
-### Login Screen
+### Login screen
 ![image](https://github.com/MankaranRooprai/stock-market-investment-simulator/assets/13322471/afb5452f-f727-4746-a645-8f8ae07f5391)
 
-### Added a Budget
-<img width="626" alt="image" src="https://user-images.githubusercontent.com/13322471/213938996-8afab58f-fa1d-4ad5-b46d-a9341637949e.png">
+### Sign-up screen
+![image](https://github.com/MankaranRooprai/stock-market-investment-simulator/assets/13322471/7cb5426e-5262-4a51-8497-9b140ffb8280)
 
-### Expense Added to Budget
-<img width="622" alt="image" src="https://user-images.githubusercontent.com/13322471/213939021-22cb576c-5be5-47de-9270-f75ab4f2e836.png">
+### Select account balance after signing up
+![image](https://github.com/MankaranRooprai/stock-market-investment-simulator/assets/13322471/957b3ca2-39b0-4ff4-9a04-d9796f299655)
 
-### Second Expense Added to Budget
-<img width="626" alt="image" src="https://user-images.githubusercontent.com/13322471/213939031-e598d586-851f-488a-92a7-a5ce7878d881.png">
+### View current positions
+![image](https://github.com/MankaranRooprai/stock-market-investment-simulator/assets/13322471/83335146-2ef5-4b67-b17a-a833b0e9ccbb)
 
-### View Expenses
-<img width="626" alt="image" src="https://user-images.githubusercontent.com/13322471/213939037-1f2c22b1-995a-4c5c-b61e-5a2bef4d1f20.png">
-
-### Add a Budget
-<img width="636" alt="image" src="https://user-images.githubusercontent.com/13322471/213939050-c3cc9c36-ae35-43b7-8175-d3777aae755a.png">
-
-### Add a New Expense
-<img width="631" alt="image" src="https://user-images.githubusercontent.com/13322471/213939062-c5b93fa6-8419-423b-9a0c-9ded35cf833b.png">
-
-### Over Budget
-<img width="615" alt="image" src="https://user-images.githubusercontent.com/13322471/213939242-3c137d94-e0ec-4083-85e8-1888ae396342.png">
+### Search for a ticker symbol and get relevant market info
+![image](https://github.com/MankaranRooprai/stock-market-investment-simulator/assets/13322471/fdbec6b9-5028-4007-99f3-a6bdd185955f)
 
 #### Features
 
