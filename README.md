@@ -5,7 +5,7 @@ This project is a stock market investment simulator built with Java Swing for th
 ## Screenshots
 
 ### Login Screen
-<img width="621" alt="image" src="https://user-images.githubusercontent.com/13322471/213938970-dc68a7b6-90de-4612-8589-90ff164e7bf4.png">
+![image](https://github.com/MankaranRooprai/stock-market-investment-simulator/assets/13322471/afb5452f-f727-4746-a645-8f8ae07f5391)
 
 ### Added a Budget
 <img width="626" alt="image" src="https://user-images.githubusercontent.com/13322471/213938996-8afab58f-fa1d-4ad5-b46d-a9341637949e.png">
