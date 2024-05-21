@@ -37,8 +37,8 @@ This project is a stock market investment simulator built with Java Swing for th
 
 1. Clone this repository to your local machine.
 2. Open the project in your preferred Java IDE.
-3. Make sure you have the necessary dependencies installed.
-4. Run the project to start the stock market investment simulator.
+3. Ensure Java SDK is installed.
+4. Run the project file 'Login.java' to start the stock market investment simulator.
 
 #### Usage
 
